@@ -6,3 +6,8 @@ spring:
     username: developer
     password: 1234567
     driver-class-name: com.mysql.cj.jdbc.Driver
+security:
+  jwt:
+    token:
+      secret-key: 57cr37
+      expire-length: 3600000
