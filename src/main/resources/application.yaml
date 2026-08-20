@@ -2,10 +2,18 @@ spring:
   application:
     name: corefitpro
   datasource:
-    url: jdbc:mysql://localhost:3306/corefitpro/useTimezone=true&serverTimezone=America/Sao_Paulo
+    url: jdbc:mysql://localhost:3306/corefitpro?useTimezone=true&serverTimezone=America/Sao_Paulo
     username: developer
     password: 1234567
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+    show-sql: false
+    open-in-view:
+      false:
 security:
   jwt:
     token:
