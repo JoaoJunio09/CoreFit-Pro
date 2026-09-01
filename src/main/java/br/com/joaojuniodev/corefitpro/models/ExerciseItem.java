@@ -13,8 +13,8 @@ public class ExerciseItem {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToOne
-    @JoinColumn(name = "exercise_item_id")
+    @ManyToOne
+    @JoinColumn(name = "exercise_id")
     private Exercise exercise;
 
     @Column

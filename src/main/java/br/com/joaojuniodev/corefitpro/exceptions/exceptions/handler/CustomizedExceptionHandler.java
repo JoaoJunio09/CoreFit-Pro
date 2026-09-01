@@ -1,7 +1,7 @@
-package br.com.joaojuniodev.corefitpro.common.exceptions.handler;
+package br.com.joaojuniodev.corefitpro.exceptions.exceptions.handler;
 
-import br.com.joaojuniodev.corefitpro.common.exceptions.InvalidJwtAuthenticationException;
-import br.com.joaojuniodev.corefitpro.common.exceptions.dto.ExceptionResponse;
+import br.com.joaojuniodev.corefitpro.exceptions.exceptions.InvalidJwtAuthenticationException;
+import br.com.joaojuniodev.corefitpro.exceptions.exceptions.dto.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
