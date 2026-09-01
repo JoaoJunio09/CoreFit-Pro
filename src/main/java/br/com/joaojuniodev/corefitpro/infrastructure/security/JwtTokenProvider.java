@@ -1,6 +1,6 @@
 package br.com.joaojuniodev.corefitpro.infrastructure.security;
 
-import br.com.joaojuniodev.corefitpro.exceptions.exceptions.InvalidJwtAuthenticationException;
+import br.com.joaojuniodev.corefitpro.exceptions.InvalidJwtAuthenticationException;
 import br.com.joaojuniodev.corefitpro.data.dtos.security.TokenDTO;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

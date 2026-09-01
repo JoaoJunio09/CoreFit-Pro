@@ -1,4 +1,4 @@
-package br.com.joaojuniodev.corefitpro.exceptions.exceptions.dto;
+package br.com.joaojuniodev.corefitpro.exceptions.dto;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package br.com.joaojuniodev.corefitpro.exceptions.exceptions;
+package br.com.joaojuniodev.corefitpro.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
