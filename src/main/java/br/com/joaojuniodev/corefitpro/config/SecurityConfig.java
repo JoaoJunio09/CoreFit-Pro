@@ -1,11 +1,10 @@
 package br.com.joaojuniodev.corefitpro.config;
 
-import br.com.joaojuniodev.corefitpro.infrastructure.security.JwtTokenFilter;
-import br.com.joaojuniodev.corefitpro.infrastructure.security.JwtTokenProvider;
+import br.com.joaojuniodev.corefitpro.security.jwt.JwtTokenFilter;
+import br.com.joaojuniodev.corefitpro.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
