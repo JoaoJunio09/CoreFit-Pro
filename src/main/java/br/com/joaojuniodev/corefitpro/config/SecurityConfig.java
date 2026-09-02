@@ -3,6 +3,7 @@ package br.com.joaojuniodev.corefitpro.config;
 import br.com.joaojuniodev.corefitpro.security.jwt.JwtTokenFilter;
 import br.com.joaojuniodev.corefitpro.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -65,17 +66,16 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(
                 authorizeHttpRequests -> authorizeHttpRequests
-                    .requestMatchers(
-                        "/auth/sign",
-                        "/auth/catechist",
-                        "/auth/refresh/**",
-                        "/auth/register",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**",
-                        "/ws/**"
-                    ).permitAll()
-                    .requestMatchers("/api/**").authenticated()
-                    .requestMatchers("/users").denyAll()
+                .requestMatchers(
+                    "/auth/sign",
+                    "/auth/refresh/**",
+                    "/auth/register",
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**",
+                    "/ws/**"
+                ).permitAll()
+                .requestMatchers("/api/**").authenticated()
+                .requestMatchers("/users").denyAll()
             )
             .cors(cors -> {})
             .build();

@@ -6,9 +6,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT u FROM User u WHERE u.username = :userName")
-    User findByUserName(@Param("userName") String userName);
+    @Query("SELECT u FROM User u JOIN u.roles r WHERE r.name = :roleName")
+    List<User> findAllByRoleName(@Param("roleName") String roleName);
+
+    @Query("SELECT u FROM User u WHERE u.username =:username")
+    User findByUserName(@Param("username") String username);
+
+    @Query("SELECT u.fullName FROM User u WHERE u.username = :username")
+    String findFullNameByUser(@Param("username") String username);
 }

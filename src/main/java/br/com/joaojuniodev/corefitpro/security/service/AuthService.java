@@ -44,19 +44,27 @@ public class AuthService {
             )
         );
 
+        log.info("2");
+
         var user = repository.findByUserName(credentials.getUsername());
         if (user == null) {
             throw new UsernameNotFoundException("Username " + credentials.getUsername() + " not found!");
         }
 
+        log.info("3");
+
         var roles = user.getRoles()
             .stream()
             .map(Role::getAuthority)
-            .toList();;
+            .toList();
+
+        String fullName = repository.findFullNameByUser(credentials.getUsername());
+
+        log.info("4");
 
         return tokenProvider.createAccessToken(
             credentials.getUsername(),
-            user.getFullName(),
+            fullName,
             roles
         );
     }
@@ -90,5 +98,4 @@ public class AuthService {
     private String generatedPassword(String passwordString) {
         return passwordEncoder.encode(passwordString);
     }
-
 }

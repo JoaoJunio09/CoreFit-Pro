@@ -25,8 +25,8 @@ import java.util.List;
 @Service
 public class JwtTokenProvider {
 
-    @Value("${security.jwt.token.secret-key:37cr57}")
-    private String secretKey = "37cr57";
+    @Value("${security.jwt.token.secret-key:57cr37}")
+    private String secretKey = "57cr37";
 
     @Value("${security.jwt.token.expire-length:3600000}")
     private long validationInMilliseconds = 3600000;
@@ -39,7 +39,7 @@ public class JwtTokenProvider {
     @PostConstruct
     void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-        algorithm =Algorithm.HMAC256(secretKey.getBytes());
+        algorithm = Algorithm.HMAC256(secretKey.getBytes());
     }
 
     public TokenDTO createAccessToken(String username, String fullName, List<String> roles) {
@@ -94,7 +94,7 @@ public class JwtTokenProvider {
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
 
-        if (containsBearerToken(bearerToken)) return bearerToken.substring("Bearer".length());
+        if (containsBearerToken(bearerToken)) return bearerToken.substring("Bearer ".length());
         return null;
     }
 

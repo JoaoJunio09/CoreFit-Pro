@@ -20,13 +20,13 @@ public class User implements UserDetails {
     @Column
     private String password;
 
-    @Column(nullable = false)
+    @Column(name = "full_name", nullable = false)
     private String fullName;
 
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "recovery_email", nullable = false)
     private String recoveryEmail;
 
     @Column(name = "account_non_expired")
@@ -77,6 +77,11 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 
     public UUID getId() {

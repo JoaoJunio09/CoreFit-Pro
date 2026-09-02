@@ -1,6 +1,7 @@
 package br.com.joaojuniodev.corefitpro.exceptions.handler;
 
 import br.com.joaojuniodev.corefitpro.exceptions.InvalidJwtAuthenticationException;
+import br.com.joaojuniodev.corefitpro.exceptions.NotFoundException;
 import br.com.joaojuniodev.corefitpro.exceptions.dto.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,16 @@ public class CustomizedExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundException(Exception ex, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+            ex.getMessage(),
+            request.getDescription(true),
+            new Date()
+        );
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(InvalidJwtAuthenticationException.class)
     public final ResponseEntity<ExceptionResponse> handleInvalidJwtAuthenticationException(Exception ex, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse(
@@ -34,5 +45,4 @@ public class CustomizedExceptionHandler {
         );
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
-
 }
