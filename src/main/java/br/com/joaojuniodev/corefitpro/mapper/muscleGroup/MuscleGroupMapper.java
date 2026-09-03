@@ -11,11 +11,14 @@ import org.springframework.stereotype.Component;
 public class MuscleGroupMapper implements ObjectMapper<MuscleGroup, MuscleGroupResponseDTO, MuscleGroupRequestDTO> {
     @Override
     public MuscleGroup toEntity(MuscleGroupRequestDTO request) {
-        return null;
+        MuscleGroup muscleGroup = new MuscleGroup();
+        muscleGroup.setId(request.id());
+        muscleGroup.setName(request.name());
+        return muscleGroup;
     }
 
     @Override
     public MuscleGroupResponseDTO toResponse(MuscleGroup entity) {
-        return null;
+        return new MuscleGroupResponseDTO(entity.getId(), entity.getName());
     }
 }
