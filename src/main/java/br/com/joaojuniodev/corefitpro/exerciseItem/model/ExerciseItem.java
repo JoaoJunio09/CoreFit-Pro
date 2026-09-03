@@ -15,15 +15,15 @@ public class ExerciseItem {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "exercise_id")
-    private Exercise exercise;
-
     @Column
     private Integer repetitions;
 
     @Column
     private Integer series;
+
+    @ManyToOne
+    @JoinColumn(name = "exercise_id")
+    private Exercise exercise;
 
     @ManyToOne
     @JoinColumn(name = "training_id")
