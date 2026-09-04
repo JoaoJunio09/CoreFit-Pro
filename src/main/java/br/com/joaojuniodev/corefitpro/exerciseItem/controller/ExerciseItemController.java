@@ -31,12 +31,12 @@ public class ExerciseItemController {
     }
 
     @PostMapping
-    public ResponseEntity<ExerciseItemResponseDTO> create(ExerciseItemRequestDTO exerciseItem) {
+    public ResponseEntity<ExerciseItemResponseDTO> create(@RequestBody ExerciseItemRequestDTO exerciseItem) {
         return ResponseEntity.ok().body(exerciseItemService.create(exerciseItem));
     }
 
     @PutMapping
-    public ResponseEntity<ExerciseItemResponseDTO> update(ExerciseItemRequestDTO exerciseItem) {
+    public ResponseEntity<ExerciseItemResponseDTO> update(@RequestBody ExerciseItemRequestDTO exerciseItem) {
         return ResponseEntity.ok().body(exerciseItemService.update(exerciseItem));
     }
 

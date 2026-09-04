@@ -30,12 +30,12 @@ public class TrainingController {
     }
 
     @PostMapping
-    public ResponseEntity<TrainingResponseDTO> create(TrainingRequestDTO training) {
+    public ResponseEntity<TrainingResponseDTO> create(@RequestBody TrainingRequestDTO training) {
         return ResponseEntity.ok().body(trainingService.create(training));
     }
 
     @PutMapping
-    public ResponseEntity<TrainingResponseDTO> update(TrainingRequestDTO training) {
+    public ResponseEntity<TrainingResponseDTO> update(@RequestBody TrainingRequestDTO training) {
         return ResponseEntity.ok().body(trainingService.update(training));
     }
 

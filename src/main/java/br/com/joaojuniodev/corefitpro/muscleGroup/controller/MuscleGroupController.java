@@ -30,12 +30,12 @@ public class MuscleGroupController {
     }
 
     @PostMapping
-    public ResponseEntity<MuscleGroupResponseDTO> create(MuscleGroupRequestDTO muscleGroup) {
+    public ResponseEntity<MuscleGroupResponseDTO> create(@RequestBody MuscleGroupRequestDTO muscleGroup) {
         return ResponseEntity.ok().body(muscleGroupService.create(muscleGroup));
     }
 
     @PutMapping
-    public ResponseEntity<MuscleGroupResponseDTO> update(MuscleGroupRequestDTO muscleGroup) {
+    public ResponseEntity<MuscleGroupResponseDTO> update(@RequestBody MuscleGroupRequestDTO muscleGroup) {
         return ResponseEntity.ok().body(muscleGroupService.update(muscleGroup));
     }
 
