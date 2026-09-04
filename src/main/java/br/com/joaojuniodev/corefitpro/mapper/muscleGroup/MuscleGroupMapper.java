@@ -1,6 +1,5 @@
 package br.com.joaojuniodev.corefitpro.mapper.muscleGroup;
 
-
 import br.com.joaojuniodev.corefitpro.mapper.ObjectMapper;
 import br.com.joaojuniodev.corefitpro.muscleGroup.dto.request.MuscleGroupRequestDTO;
 import br.com.joaojuniodev.corefitpro.muscleGroup.dto.response.MuscleGroupResponseDTO;

@@ -25,7 +25,7 @@ public class ExerciseItemService {
     }
 
     public List<ExerciseItemResponseDTO> getAll() {
-        logger.info("Getting All Exercises");
+        logger.info("Getting All Exercises Items");
 
         return exerciseItemRepository.findAll()
             .stream()
@@ -34,7 +34,7 @@ public class ExerciseItemService {
     }
 
     public ExerciseItemResponseDTO getById(UUID id) {
-        logger.info("Getting By Exercise Id");
+        logger.info("Getting By Exercise Item Id");
 
         var entity = exerciseItemRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Not found this Exercise Item Id: " + id));
@@ -42,7 +42,7 @@ public class ExerciseItemService {
     }
 
     public ExerciseItemResponseDTO create(ExerciseItemRequestDTO exerciseItem) {
-        logger.info("Creating new Exercise");
+        logger.info("Creating new Exercise Item");
 
         var entity = mapper.toEntity(exerciseItem);
         var exerciseItemCreated = exerciseItemRepository.save(entity);
@@ -50,7 +50,7 @@ public class ExerciseItemService {
     }
 
     public ExerciseItemResponseDTO update(ExerciseItemRequestDTO exerciseItem) {
-        logger.info("Updating Exercise");
+        logger.info("Updating Exercise Item");
 
         var entity = exerciseItemRepository.findById(exerciseItem.id())
             .orElseThrow(() -> new NotFoundException("Not found this Exercise Item Id: " + exerciseItem.id()));

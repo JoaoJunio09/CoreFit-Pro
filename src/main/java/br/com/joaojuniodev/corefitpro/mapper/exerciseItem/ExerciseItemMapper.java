@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ExerciseItemMapper implements ObjectMapper<ExerciseItem, ExerciseItemResponseDTO, ExerciseItemRequestDTO> {
-
     private final ExerciseRepository exerciseRepository;
     private final TrainingRepository trainingRepository;
     private final ExerciseMapper exerciseMapper;
@@ -24,8 +23,8 @@ public class ExerciseItemMapper implements ObjectMapper<ExerciseItem, ExerciseIt
 
     @Override
     public ExerciseItem toEntity(ExerciseItemRequestDTO request) {
-        var exercise = exerciseRepository.findById(request.exerciseId()).get();
-        var training = trainingRepository.findById(request.trainingId()).get();
+        var exercise = exerciseRepository.findById(request.exerciseId()).orElseGet(null);
+        var training = trainingRepository.findById(request.trainingId()).orElseGet(null);
 
         ExerciseItem exerciseItem = new ExerciseItem();
         exerciseItem.setId(request.id());
