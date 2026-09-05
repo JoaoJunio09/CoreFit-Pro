@@ -71,6 +71,8 @@ public class TrainingService {
 
         var saved = trainingRepository.save(entity);
 
+        logger.info("savo primeira vez");
+
         List<ExerciseItem> exerciseItems = new ArrayList<>();
 
         for (ExerciseItemRequestDTO exerciseItem : training.exerciseItems()) {
@@ -79,8 +81,12 @@ public class TrainingService {
             exerciseItems.add(exerciseItemRepository.save(exerciseItemEntity));
         }
 
+        logger.info("adiciono exercises items");
+
         saved.setExerciseItems(exerciseItems);
         var trainingCreated = trainingRepository.save(saved);
+
+        logger.info("Salvo d novo");
 
         return trainingMapper.toResponse(trainingCreated);
     }

@@ -1,18 +1,21 @@
 package br.com.joaojuniodev.corefitpro.security.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false)
     private String name;
@@ -27,7 +30,7 @@ public class Role implements GrantedAuthority {
 
     public Role() {}
 
-    public Role(Long id, String name) {
+    public Role(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -37,11 +40,11 @@ public class Role implements GrantedAuthority {
         return name;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

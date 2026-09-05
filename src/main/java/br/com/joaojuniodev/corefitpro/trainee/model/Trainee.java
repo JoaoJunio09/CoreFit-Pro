@@ -3,6 +3,8 @@ package br.com.joaojuniodev.corefitpro.trainee.model;
 import br.com.joaojuniodev.corefitpro.personalTrainer.model.PersonalTrainer;
 import br.com.joaojuniodev.corefitpro.security.model.User;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.Objects;
 import java.util.UUID;

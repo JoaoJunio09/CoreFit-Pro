@@ -1,5 +1,5 @@
 CREATE TABLE users (
-    id                        CHAR(36)     NOT NULL,
+    id                        UUID         NOT NULL DEFAULT gen_random_uuid(),
     username                  VARCHAR(50)  NOT NULL,
     password                  VARCHAR(255) NULL,
     full_name                 VARCHAR(150) NOT NULL,
@@ -12,4 +12,4 @@ CREATE TABLE users (
     CONSTRAINT pk_users PRIMARY KEY (id),
     CONSTRAINT uq_users_username UNIQUE (username),
     CONSTRAINT uq_users_email UNIQUE (email)
-) ENGINE = InnoDB;
+);
