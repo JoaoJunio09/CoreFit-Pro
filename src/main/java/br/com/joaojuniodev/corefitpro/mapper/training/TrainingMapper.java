@@ -24,7 +24,6 @@ public class TrainingMapper implements ObjectMapper<Training, TrainingResponseDT
         training.setId(request.id());
         training.setTitle(request.title());
         training.setDescription(request.description());
-        training.setDayOfWeek(request.dayOfWeek());
         return training;
     }
 
@@ -34,7 +33,6 @@ public class TrainingMapper implements ObjectMapper<Training, TrainingResponseDT
             entity.getId(),
             entity.getTitle(),
             entity.getDescription(),
-            entity.getDayOfWeek(),
             entity.getMuscleGroups().stream().map(muscleGroupMapper::toResponse).toList(),
             entity.getExerciseItems().stream().map(exerciseItemMapper::toResponse).toList()
         );

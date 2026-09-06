@@ -23,11 +23,8 @@ public class ExerciseItemMapper implements ObjectMapper<ExerciseItem, ExerciseIt
 
     @Override
     public ExerciseItem toEntity(ExerciseItemRequestDTO request) {
-        System.out.println("oi");
         var exercise = exerciseRepository.findById(request.exerciseId()).get();
-        System.out.println("oi2");
         var training = request.trainingId() != null ? trainingRepository.findById(request.trainingId()).get() : null;
-        System.out.println("oi3");
 
         ExerciseItem exerciseItem = new ExerciseItem();
         exerciseItem.setId(request.id());

@@ -71,7 +71,33 @@ public class TrainingService {
 
         var saved = trainingRepository.save(entity);
 
-        logger.info("savo primeira vez");
+        List<ExerciseItem> exerciseItems = new ArrayList<>();
+
+        for (ExerciseItemRequestDTO exerciseItem : training.exerciseItems()) {
+            var exerciseItemEntity = exerciseItemMapper.toEntity(exerciseItem);
+            exerciseItemEntity.setTraining(entity);
+            exerciseItems.add(exerciseItemRepository.save(exerciseItemEntity));
+        }
+
+        saved.setExerciseItems(exerciseItems);
+        var trainingCreated = trainingRepository.save(saved);
+
+        return trainingMapper.toResponse(trainingCreated);
+    }
+
+    @Transactional
+    public TrainingResponseDTO update(TrainingRequestDTO training) {
+        logger.info("Updating Training");
+
+        var entity = trainingRepository.findById(training.id())
+            .orElseThrow(() -> new NotFoundException("Not found this Exercise Id: " + training.id()));
+        entity.setTitle(training.title());
+        entity.setDescription(training.description());
+
+        List<MuscleGroup> muscleGroups = muscleGroupRepository.findAllById(training.muscleGroupsId());
+        entity.setMuscleGroups(muscleGroups);
+
+        var saved = trainingRepository.save(entity);
 
         List<ExerciseItem> exerciseItems = new ArrayList<>();
 
@@ -81,22 +107,10 @@ public class TrainingService {
             exerciseItems.add(exerciseItemRepository.save(exerciseItemEntity));
         }
 
-        logger.info("adiciono exercises items");
-
         saved.setExerciseItems(exerciseItems);
-        var trainingCreated = trainingRepository.save(saved);
+        var trainingUpdated = trainingRepository.save(saved);
 
-        logger.info("Salvo d novo");
-
-        return trainingMapper.toResponse(trainingCreated);
-    }
-
-    public TrainingResponseDTO update(TrainingRequestDTO training) {
-        logger.info("Updating Training");
-
-        var entity = trainingRepository.findById(training.id())
-            .orElseThrow(() -> new NotFoundException("Not found this Exercise Id: " + training.id()));
-        return null;
+        return trainingMapper.toResponse(trainingUpdated);
     }
 
     public void delete(UUID id) {

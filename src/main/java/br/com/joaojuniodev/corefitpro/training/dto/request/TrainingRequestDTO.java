@@ -10,7 +10,6 @@ public record TrainingRequestDTO(
     UUID id,
     String title,
     String description,
-    DaysOfWeek dayOfWeek,
     List<UUID> muscleGroupsId,
     List<ExerciseItemRequestDTO> exerciseItems
 ) {

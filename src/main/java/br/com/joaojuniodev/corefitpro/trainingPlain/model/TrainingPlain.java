@@ -1,5 +1,6 @@
 package br.com.joaojuniodev.corefitpro.trainingPlain.model;
 
+import br.com.joaojuniodev.corefitpro.trainingItem.model.TrainingItem;
 import br.com.joaojuniodev.corefitpro.trainingPlain.enums.ObjectiveTraining;
 import br.com.joaojuniodev.corefitpro.personalTrainer.model.PersonalTrainer;
 import br.com.joaojuniodev.corefitpro.trainee.model.Trainee;
@@ -34,11 +35,11 @@ public class TrainingPlain {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-        name = "training_plain_workout",
+        name = "training_plain_training_items",
         joinColumns = @JoinColumn(name = "training_plan_id"),
-        inverseJoinColumns = @JoinColumn(name = "workout_id")
+        inverseJoinColumns = @JoinColumn(name = "training_item_id")
     )
-    private List<Training> workouts;
+    private List<TrainingItem> trainings;
 
     public TrainingPlain() {}
 
@@ -82,12 +83,12 @@ public class TrainingPlain {
         this.objective = objective;
     }
 
-    public List<Training> getWorkouts() {
-        return workouts;
+    public List<TrainingItem> getTrainings() {
+        return trainings;
     }
 
-    public void setWorkouts(List<Training> workouts) {
-        this.workouts = workouts;
+    public void setTrainings(List<TrainingItem> trainings) {
+        this.trainings = trainings;
     }
 
     @Override
