@@ -1,10 +1,12 @@
 package br.com.joaojuniodev.corefitpro.personalTrainer.model;
 
 import br.com.joaojuniodev.corefitpro.trainee.model.Trainee;
+import br.com.joaojuniodev.corefitpro.training.model.Training;
 import br.com.joaojuniodev.corefitpro.trainingPlain.model.TrainingPlain;
 import br.com.joaojuniodev.corefitpro.security.model.User;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -32,6 +34,9 @@ public class PersonalTrainer {
 
     @OneToMany(mappedBy = "personalTrainer")
     private Set<TrainingPlain> trainingPlains;
+
+    @OneToMany(mappedBy = "personalTrainer")
+    private List<Training> trainings;
 
     public PersonalTrainer() {}
 
@@ -81,6 +86,14 @@ public class PersonalTrainer {
 
     public void setTrainingPlains(Set<TrainingPlain> trainingPlains) {
         this.trainingPlains = trainingPlains;
+    }
+
+    public List<Training> getTrainings() {
+        return trainings;
+    }
+
+    public void setTrainings(List<Training> trainings) {
+        this.trainings = trainings;
     }
 
     @Override

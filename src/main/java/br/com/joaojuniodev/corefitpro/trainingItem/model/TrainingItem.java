@@ -23,6 +23,10 @@ public class TrainingItem {
     @JoinColumn(name = "training_id")
     private Training training;
 
+    @ManyToOne
+    @JoinColumn(name = "training_plan_id")
+    private TrainingPlain trainingPlain;
+
     public TrainingItem() {}
 
     public UUID getId() {
@@ -47,6 +51,14 @@ public class TrainingItem {
 
     public void setTraining(Training training) {
         this.training = training;
+    }
+
+    public TrainingPlain getTrainingPlain() {
+        return trainingPlain;
+    }
+
+    public void setTrainingPlain(TrainingPlain trainingPlain) {
+        this.trainingPlain = trainingPlain;
     }
 
     @Override

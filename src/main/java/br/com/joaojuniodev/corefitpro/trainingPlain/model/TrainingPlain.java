@@ -33,12 +33,7 @@ public class TrainingPlain {
     @Enumerated(EnumType.STRING)
     private ObjectiveTraining objective;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "training_plain_training_items",
-        joinColumns = @JoinColumn(name = "training_plan_id"),
-        inverseJoinColumns = @JoinColumn(name = "training_item_id")
-    )
+    @OneToMany(mappedBy = "trainingPlain")
     private List<TrainingItem> trainings;
 
     public TrainingPlain() {}

@@ -1,6 +1,7 @@
 package br.com.joaojuniodev.corefitpro.training.model;
 
 import br.com.joaojuniodev.corefitpro.exerciseItem.model.ExerciseItem;
+import br.com.joaojuniodev.corefitpro.personalTrainer.model.PersonalTrainer;
 import br.com.joaojuniodev.corefitpro.training.enums.DaysOfWeek;
 import br.com.joaojuniodev.corefitpro.muscleGroup.model.MuscleGroup;
 import br.com.joaojuniodev.corefitpro.trainingItem.model.TrainingItem;
@@ -25,6 +26,10 @@ public class Training {
 
     @Column
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "personal_trainer_id")
+    private PersonalTrainer personalTrainer;
 
     @ManyToMany
     @JoinTable(
@@ -61,6 +66,14 @@ public class Training {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public PersonalTrainer getPersonalTrainer() {
+        return personalTrainer;
+    }
+
+    public void setPersonalTrainer(PersonalTrainer personalTrainer) {
+        this.personalTrainer = personalTrainer;
     }
 
     public List<MuscleGroup> getMuscleGroups() {
