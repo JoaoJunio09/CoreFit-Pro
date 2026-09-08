@@ -16,14 +16,10 @@ public class PersonalTrainerMapper implements ObjectMapper<PersonalTrainer, Pers
 
     private final UserRepository userRepository;
     private final TraineeMapper traineeMapper;
-    private final TrainingPlainMapper trainingPlainMapper;
-    private final TrainingMapper trainingMapper;
 
-    public PersonalTrainerMapper(UserRepository userRepository, TraineeMapper traineeMapper, TrainingPlainMapper trainingPlainMapper, TrainingMapper trainingMapper) {
+    public PersonalTrainerMapper(UserRepository userRepository, TraineeMapper traineeMapper) {
         this.userRepository = userRepository;
         this.traineeMapper = traineeMapper;
-        this.trainingPlainMapper = trainingPlainMapper;
-        this.trainingMapper = trainingMapper;
     }
 
     @Override
@@ -44,9 +40,7 @@ public class PersonalTrainerMapper implements ObjectMapper<PersonalTrainer, Pers
             entity.getId(),
             entity.getFirstName(),
             entity.getLastName(),
-            entity.getTrainees().stream().map(traineeMapper::toResponse).toList(),
-            entity.getTrainingPlains().stream().map(trainingPlainMapper::toResponse).toList(),
-            entity.getTrainings().stream().map(trainingMapper::toResponse).toList()
+            entity.getTrainees().stream().map(traineeMapper::toResponse).toList()
         );
     }
 

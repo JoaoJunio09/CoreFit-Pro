@@ -15,12 +15,10 @@ public class TraineeMapper implements ObjectMapper<Trainee, TraineeResponseDTO, 
 
     private final PersonalTrainerRepository personalTrainerRepository;
     private final UserRepository userRepository;
-    private final PersonalTrainerMapper personalTrainerMapper;
 
-    public TraineeMapper(PersonalTrainerRepository personalTrainerRepository, UserRepository userRepository, PersonalTrainerMapper personalTrainerMapper) {
+    public TraineeMapper(PersonalTrainerRepository personalTrainerRepository, UserRepository userRepository) {
         this.personalTrainerRepository = personalTrainerRepository;
         this.userRepository = userRepository;
-        this.personalTrainerMapper = personalTrainerMapper;
     }
 
     @Override
@@ -43,8 +41,7 @@ public class TraineeMapper implements ObjectMapper<Trainee, TraineeResponseDTO, 
         return new TraineeResponseDTO(
             entity.getId(),
             entity.getFirstName(),
-            entity.getLastName(),
-            personalTrainerMapper.toSummary(entity.getPersonalTrainer())
+            entity.getLastName()
         );
     }
 }
