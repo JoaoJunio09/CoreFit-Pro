@@ -1,5 +1,13 @@
 package br.com.joaojuniodev.corefitpro.trainingPlain.dto.request;
 
-public record TrainingPlainRequestDTO(
+import br.com.joaojuniodev.corefitpro.trainingPlain.enums.ObjectiveTraining;
 
+import java.util.UUID;
+
+public record TrainingPlainRequestDTO(
+    UUID id,
+    String description,
+    ObjectiveTraining objective,
+    UUID personalTrainerId,
+    UUID traineeId
 ) {}
