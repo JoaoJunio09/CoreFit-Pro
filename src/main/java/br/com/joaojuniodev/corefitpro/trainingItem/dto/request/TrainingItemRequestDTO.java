@@ -7,5 +7,6 @@ import java.util.UUID;
 public record TrainingItemRequestDTO(
     UUID id,
     DaysOfWeek dayOfWeek,
-    UUID trainingId
+    UUID trainingId,
+    UUID trainingPlainId
 ) {}

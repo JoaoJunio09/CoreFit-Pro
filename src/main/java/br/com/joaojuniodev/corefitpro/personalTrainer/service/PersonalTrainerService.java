@@ -25,7 +25,7 @@ public class PersonalTrainerService {
     }
 
     public List<PersonalTrainerResponseDTO> getAll() {
-        logger.info("Getting All Exercises");
+        logger.info("Getting All Personals Trainers");
 
         return personalTrainerRepository.findAll()
             .stream()
@@ -34,7 +34,7 @@ public class PersonalTrainerService {
     }
 
     public PersonalTrainerResponseDTO getById(UUID id) {
-        logger.info("Getting By Exercise Id");
+        logger.info("Getting By Personal Trainer Id");
 
         var entity = personalTrainerRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Not found this Personal Trainer Id: " + id));
@@ -42,7 +42,7 @@ public class PersonalTrainerService {
     }
 
     public PersonalTrainerResponseDTO create(PersonalTrainerRequestDTO personalTrainer) {
-        logger.info("Creating new Exercise");
+        logger.info("Creating new Personal Trainer");
 
         var entity = personalTrainerMapper.toEntity(personalTrainer);
         var personalTrainerCreated = personalTrainerRepository.save(entity);
@@ -50,7 +50,7 @@ public class PersonalTrainerService {
     }
 
     public PersonalTrainerResponseDTO update(PersonalTrainerRequestDTO personalTrainer) {
-        logger.info("Updating Exercise");
+        logger.info("Updating Personal Trainer");
 
         var entity = personalTrainerRepository.findById(personalTrainer.id())
             .orElseThrow(() -> new NotFoundException("Not found this Personal Trainer Id: " + personalTrainer.id()));

@@ -8,9 +8,12 @@ import br.com.joaojuniodev.corefitpro.mapper.trainingItem.TrainingItemMapper;
 import br.com.joaojuniodev.corefitpro.personalTrainer.repository.PersonalTrainerRepository;
 import br.com.joaojuniodev.corefitpro.trainee.repository.TraineeRepository;
 import br.com.joaojuniodev.corefitpro.trainingPlain.dto.request.TrainingPlainRequestDTO;
+import br.com.joaojuniodev.corefitpro.trainingPlain.dto.response.TrainingPlainDetailsDTO;
 import br.com.joaojuniodev.corefitpro.trainingPlain.dto.response.TrainingPlainResponseDTO;
 import br.com.joaojuniodev.corefitpro.trainingPlain.model.TrainingPlain;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class TrainingPlainMapper implements ObjectMapper<TrainingPlain, TrainingPlainResponseDTO, TrainingPlainRequestDTO> {
@@ -49,11 +52,23 @@ public class TrainingPlainMapper implements ObjectMapper<TrainingPlain, Training
     public TrainingPlainResponseDTO toResponse(TrainingPlain entity) {
         return new TrainingPlainResponseDTO(
             entity.getId(),
-            personalTrainerMapper.toResponse(entity.getPersonalTrainer()),
+            personalTrainerMapper.toSummary(entity.getPersonalTrainer()),
+            traineeMapper.toResponse(entity.getTrainee()),
+            entity.getDescription(),
+            entity.getObjective()
+        );
+    }
+
+    public TrainingPlainDetailsDTO toDetails(TrainingPlain entity) {
+        return new TrainingPlainDetailsDTO(
+            entity.getId(),
+            personalTrainerMapper.toSummary(entity.getPersonalTrainer()),
             traineeMapper.toResponse(entity.getTrainee()),
             entity.getDescription(),
             entity.getObjective(),
-            entity.getTrainings().stream().map(trainingItemMapper::toResponse).toList()
+            entity.getTrainings() != null
+                ? entity.getTrainings().stream().map(trainingItemMapper::toResponse).toList()
+                : List.of()
         );
     }
 }

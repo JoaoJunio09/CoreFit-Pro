@@ -7,16 +7,19 @@ import br.com.joaojuniodev.corefitpro.training.repository.TrainingRepository;
 import br.com.joaojuniodev.corefitpro.trainingItem.dto.request.TrainingItemRequestDTO;
 import br.com.joaojuniodev.corefitpro.trainingItem.dto.response.TrainingItemResponseDTO;
 import br.com.joaojuniodev.corefitpro.trainingItem.model.TrainingItem;
+import br.com.joaojuniodev.corefitpro.trainingPlain.repository.TrainingPlainRepository;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TrainingItemMapper implements ObjectMapper<TrainingItem, TrainingItemResponseDTO, TrainingItemRequestDTO> {
 
     private final TrainingRepository trainingRepository;
+    private final TrainingPlainRepository trainingPlainRepository;
     private final TrainingMapper trainingMapper;
 
-    public TrainingItemMapper(TrainingRepository trainingRepository, TrainingMapper trainingMapper) {
+    public TrainingItemMapper(TrainingRepository trainingRepository, TrainingPlainRepository trainingPlainRepository, TrainingMapper trainingMapper) {
         this.trainingRepository = trainingRepository;
+        this.trainingPlainRepository = trainingPlainRepository;
         this.trainingMapper = trainingMapper;
     }
 
@@ -24,10 +27,14 @@ public class TrainingItemMapper implements ObjectMapper<TrainingItem, TrainingIt
     public TrainingItem toEntity(TrainingItemRequestDTO request) {
         var training = trainingRepository.findById(request.trainingId())
             .orElseThrow(() -> new NotFoundException("Not found Training Id: " + request.trainingId()));
+        var trainingPlain = trainingPlainRepository.findById(request.trainingPlainId())
+            .orElseThrow(() -> new NotFoundException("Not found Training Plain Id: " + request.trainingPlainId()));
+
         TrainingItem trainingItem = new TrainingItem();
         trainingItem.setId(request.id());
         trainingItem.setDayOfWeek(request.dayOfWeek());
         trainingItem.setTraining(training);
+        trainingItem.setTrainingPlain(trainingPlain);
         return trainingItem;
     }
 

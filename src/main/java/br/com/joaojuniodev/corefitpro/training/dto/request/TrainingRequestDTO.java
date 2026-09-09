@@ -10,6 +10,7 @@ public record TrainingRequestDTO(
     UUID id,
     String title,
     String description,
+    UUID personalTrainerId,
     List<UUID> muscleGroupsId,
     List<ExerciseItemRequestDTO> exerciseItems
 ) {

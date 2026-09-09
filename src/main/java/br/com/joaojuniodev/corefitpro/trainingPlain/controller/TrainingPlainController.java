@@ -1,6 +1,7 @@
 package br.com.joaojuniodev.corefitpro.trainingPlain.controller;
 
 import br.com.joaojuniodev.corefitpro.trainingPlain.dto.request.TrainingPlainRequestDTO;
+import br.com.joaojuniodev.corefitpro.trainingPlain.dto.response.TrainingPlainDetailsDTO;
 import br.com.joaojuniodev.corefitpro.trainingPlain.dto.response.TrainingPlainResponseDTO;
 import br.com.joaojuniodev.corefitpro.trainingPlain.service.TrainingPlainService;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class TrainingPlainController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TrainingPlainResponseDTO> getById(@PathVariable UUID id) {
+    public ResponseEntity<TrainingPlainDetailsDTO> getById(@PathVariable UUID id) {
         return ResponseEntity.ok().body(trainingPlainService.getById(id));
     }
 

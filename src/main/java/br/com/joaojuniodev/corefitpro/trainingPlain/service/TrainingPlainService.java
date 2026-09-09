@@ -3,6 +3,7 @@ package br.com.joaojuniodev.corefitpro.trainingPlain.service;
 import br.com.joaojuniodev.corefitpro.exceptions.NotFoundException;
 import br.com.joaojuniodev.corefitpro.mapper.trainingPlain.TrainingPlainMapper;
 import br.com.joaojuniodev.corefitpro.trainingPlain.dto.request.TrainingPlainRequestDTO;
+import br.com.joaojuniodev.corefitpro.trainingPlain.dto.response.TrainingPlainDetailsDTO;
 import br.com.joaojuniodev.corefitpro.trainingPlain.dto.response.TrainingPlainResponseDTO;
 import br.com.joaojuniodev.corefitpro.trainingPlain.repository.TrainingPlainRepository;
 import org.slf4j.Logger;
@@ -33,12 +34,12 @@ public class TrainingPlainService {
             .toList();
     }
 
-    public TrainingPlainResponseDTO getById(UUID id) {
+    public TrainingPlainDetailsDTO getById(UUID id) {
         logger.info("Getting By Training Plain Id");
 
         var entity = trainingPlainRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Not found this Training Plain Id: " + id));
-        return trainingPlainMapper.toResponse(entity);
+        return trainingPlainMapper.toDetails(entity);
     }
 
     public TrainingPlainResponseDTO create(TrainingPlainRequestDTO trainingPlain) {
