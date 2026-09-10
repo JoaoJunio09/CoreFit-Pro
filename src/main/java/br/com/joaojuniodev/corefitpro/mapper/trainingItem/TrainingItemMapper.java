@@ -33,6 +33,7 @@ public class TrainingItemMapper implements ObjectMapper<TrainingItem, TrainingIt
         TrainingItem trainingItem = new TrainingItem();
         trainingItem.setId(request.id());
         trainingItem.setDayOfWeek(request.dayOfWeek());
+        trainingItem.setCompleted(false);
         trainingItem.setTraining(training);
         trainingItem.setTrainingPlain(trainingPlain);
         return trainingItem;
@@ -43,6 +44,7 @@ public class TrainingItemMapper implements ObjectMapper<TrainingItem, TrainingIt
         return new TrainingItemResponseDTO(
             entity.getId(),
             entity.getDayOfWeek(),
+            entity.getCompleted(),
             trainingMapper.toResponse(entity.getTraining())
         );
     }

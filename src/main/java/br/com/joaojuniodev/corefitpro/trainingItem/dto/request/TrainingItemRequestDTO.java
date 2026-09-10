@@ -1,6 +1,6 @@
 package br.com.joaojuniodev.corefitpro.trainingItem.dto.request;
 
-import br.com.joaojuniodev.corefitpro.training.enums.DaysOfWeek;
+import br.com.joaojuniodev.corefitpro.trainingItem.enums.DaysOfWeek;
 
 import java.util.UUID;
 

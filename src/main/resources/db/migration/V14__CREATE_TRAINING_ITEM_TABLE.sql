@@ -1,6 +1,7 @@
 CREATE TABLE training_item (
     id               UUID        NOT NULL DEFAULT gen_random_uuid(),
     day_of_week      VARCHAR(20) NOT NULL,
+    completed        BOOLEAN     NOT NULL,
     training_id      UUID        NOT NULL,
     training_plan_id UUID        NULL,
     CONSTRAINT pk_training_item PRIMARY KEY (id),

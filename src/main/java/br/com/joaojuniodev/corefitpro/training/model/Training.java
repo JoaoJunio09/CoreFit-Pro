@@ -2,12 +2,8 @@ package br.com.joaojuniodev.corefitpro.training.model;
 
 import br.com.joaojuniodev.corefitpro.exerciseItem.model.ExerciseItem;
 import br.com.joaojuniodev.corefitpro.personalTrainer.model.PersonalTrainer;
-import br.com.joaojuniodev.corefitpro.training.enums.DaysOfWeek;
 import br.com.joaojuniodev.corefitpro.muscleGroup.model.MuscleGroup;
-import br.com.joaojuniodev.corefitpro.trainingItem.model.TrainingItem;
 import jakarta.persistence.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.util.List;
 import java.util.Objects;

@@ -1,6 +1,6 @@
 package br.com.joaojuniodev.corefitpro.trainingItem.model;
 
-import br.com.joaojuniodev.corefitpro.training.enums.DaysOfWeek;
+import br.com.joaojuniodev.corefitpro.trainingItem.enums.DaysOfWeek;
 import br.com.joaojuniodev.corefitpro.training.model.Training;
 import br.com.joaojuniodev.corefitpro.trainingPlain.model.TrainingPlain;
 import jakarta.persistence.*;
@@ -18,6 +18,9 @@ public class TrainingItem {
 
     @Enumerated(EnumType.STRING)
     private DaysOfWeek dayOfWeek;
+
+    @Column
+    private Boolean completed;
 
     @ManyToOne
     @JoinColumn(name = "training_id")
@@ -43,6 +46,14 @@ public class TrainingItem {
 
     public void setDayOfWeek(DaysOfWeek dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
     }
 
     public Training getTraining() {

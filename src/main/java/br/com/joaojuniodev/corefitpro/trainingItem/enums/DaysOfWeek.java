@@ -1,4 +1,4 @@
-package br.com.joaojuniodev.corefitpro.training.enums;
+package br.com.joaojuniodev.corefitpro.trainingItem.enums;
 
 public enum DaysOfWeek {
     MONDAY, // SEGUNDA

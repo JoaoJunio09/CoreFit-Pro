@@ -39,6 +39,11 @@ public class TrainingItemController {
         return ResponseEntity.ok().body(trainingService.update(trainingItem));
     }
 
+    @PatchMapping("/markCompleted/{id}")
+    public ResponseEntity<TrainingItemResponseDTO> markCompleted(@PathVariable UUID id) {
+        return ResponseEntity.ok().body(trainingService.markCompletedTraining(id));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
         trainingService.delete(id);

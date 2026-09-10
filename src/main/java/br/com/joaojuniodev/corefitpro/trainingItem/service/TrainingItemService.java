@@ -2,12 +2,11 @@ package br.com.joaojuniodev.corefitpro.trainingItem.service;
 
 import br.com.joaojuniodev.corefitpro.exceptions.NotFoundException;
 import br.com.joaojuniodev.corefitpro.mapper.trainingItem.TrainingItemMapper;
-import br.com.joaojuniodev.corefitpro.training.dto.request.TrainingRequestDTO;
-import br.com.joaojuniodev.corefitpro.training.dto.response.TrainingResponseDTO;
 import br.com.joaojuniodev.corefitpro.training.model.Training;
 import br.com.joaojuniodev.corefitpro.training.repository.TrainingRepository;
 import br.com.joaojuniodev.corefitpro.trainingItem.dto.request.TrainingItemRequestDTO;
 import br.com.joaojuniodev.corefitpro.trainingItem.dto.response.TrainingItemResponseDTO;
+import br.com.joaojuniodev.corefitpro.trainingItem.model.TrainingItem;
 import br.com.joaojuniodev.corefitpro.trainingItem.repository.TrainingItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +63,7 @@ public class TrainingItemService {
 
         Training training = trainingItem != null
             ? trainingRepository.findById(trainingItem.trainingId())
-                .orElseThrow(() -> new NotFoundException("Not found Training Id: " + trainingItem.trainingId()))
+            .orElseThrow(() -> new NotFoundException("Not found Training Id: " + trainingItem.trainingId()))
             : null;
 
         var entity = trainingItemRepository.findById(trainingItem.id())
@@ -75,11 +74,35 @@ public class TrainingItemService {
         return trainingItemMapper.toResponse(entity);
     }
 
+    public TrainingItemResponseDTO markCompletedTraining(UUID id) {
+        logger.info("Marking Training Item this Completed");
+
+        var entity = trainingItemRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Not found this Training Item Id: " + id));
+        entity.setCompleted(true);
+        return trainingItemMapper.toResponse(entity);
+    }
+
     public void delete(UUID id) {
         logger.info("Deleting Training Item");
 
         var entity = trainingItemRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Not found this Training Item Id: " + id));
         trainingItemRepository.delete(entity);
+    }
+
+    @Transactional
+    protected void resetCompletedWorkouts() {
+        List<TrainingItem> trainingItems = trainingItemRepository.findAll();
+        trainingItems.forEach(this::reset);
+
+        logger.info("All workouts marked as incomplete");
+    }
+
+    private void reset(TrainingItem trainingItem) {
+        trainingItem.setCompleted(false);
+        trainingItemRepository.save(trainingItem);
+
+        logger.info("Workout marked as not completed");
     }
 }
