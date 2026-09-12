@@ -41,7 +41,7 @@ public class PersonalDashboardService {
         long totalTrainingsOfToday = trainingItemRepository.countByDayOfWeek(day);
 
         var activeTrainees = traineeRepository.countByUserEnabledTrue();
-        var activePlans = trainingPlainRepository.countByActivated();
+        var activePlans = trainingPlainRepository.countByActiveTrue();
         var pendingMatters = trainingItemRepository.countByDayOfWeekAndCompletedFalse(day);
         var workoutsCompletedToday = trainingItemRepository.countByDayOfWeekAndCompletedTrue(day);
         var percentageWorkoutsCompletedToday = workoutsCompletedToday == 0

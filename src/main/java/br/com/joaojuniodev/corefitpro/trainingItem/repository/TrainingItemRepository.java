@@ -31,8 +31,8 @@ public interface TrainingItemRepository extends JpaRepository<TrainingItem, UUID
                 ' ',
                 ti.trainingPlain.trainee.lastName
             ) as traineeName
-        FROM TrainingItem ti,
-        WHERE ti.completed = false,
+        FROM TrainingItem ti
+        WHERE ti.completed = false
         GROUP BY
             ti.trainingPlain.trainee.id,
             ti.trainingPlain.trainee.firstName,
@@ -50,7 +50,7 @@ public interface TrainingItemRepository extends JpaRepository<TrainingItem, UUID
                     ELSE 0
                 END
             ) AS completedTrainings
-        FROM TransactionItem ti,
+        FROM TrainingItem ti
         GROUP BY ti.dayOfWeek
         ORDER BY ti.dayOfWeek
     """)
