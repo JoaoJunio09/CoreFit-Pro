@@ -42,7 +42,7 @@ public class PersonalDashboardService {
 
         var activeTrainees = traineeRepository.countByUserEnabledTrue();
         var activePlans = trainingPlainRepository.countByActiveTrue();
-        var pendingMatters = trainingItemRepository.countByDayOfWeekAndCompletedFalse(day);
+        var pendings = trainingItemRepository.countByDayOfWeekAndCompletedFalse(day);
         var workoutsCompletedToday = trainingItemRepository.countByDayOfWeekAndCompletedTrue(day);
         var percentageWorkoutsCompletedToday = workoutsCompletedToday == 0
             ? 0.0
@@ -55,7 +55,7 @@ public class PersonalDashboardService {
         return new DashboardResponseDTO(
             activeTrainees,
             activePlans,
-            pendingMatters,
+            pendings,
             workoutsCompletedToday,
             percentageWorkoutsCompletedToday,
             todayTrainings,

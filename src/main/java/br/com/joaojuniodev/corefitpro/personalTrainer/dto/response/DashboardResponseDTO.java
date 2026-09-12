@@ -8,7 +8,7 @@ import java.util.List;
 public record DashboardResponseDTO(
     Long activeTrainees,
     Long activePlans,
-    Long pendingMatters,
+    Long pendings,
     Long workoutsCompletedToday,
     Double percentageWorkoutsCompletedToday,
     List<TrainingItem> workoutsToday,
