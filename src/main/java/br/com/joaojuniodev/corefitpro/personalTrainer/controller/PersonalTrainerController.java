@@ -1,7 +1,9 @@
 package br.com.joaojuniodev.corefitpro.personalTrainer.controller;
 
 import br.com.joaojuniodev.corefitpro.personalTrainer.dto.request.PersonalTrainerRequestDTO;
+import br.com.joaojuniodev.corefitpro.personalTrainer.dto.response.DashboardResponseDTO;
 import br.com.joaojuniodev.corefitpro.personalTrainer.dto.response.PersonalTrainerResponseDTO;
+import br.com.joaojuniodev.corefitpro.personalTrainer.service.PersonalDashboardService;
 import br.com.joaojuniodev.corefitpro.personalTrainer.service.PersonalTrainerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +16,11 @@ import java.util.UUID;
 public class PersonalTrainerController {
 
     private final PersonalTrainerService personalTrainerService;
+    private final PersonalDashboardService personalDashboardService;
 
-    public PersonalTrainerController(PersonalTrainerService personalTrainerService) {
+    public PersonalTrainerController(PersonalTrainerService personalTrainerService, PersonalDashboardService personalDashboardService) {
         this.personalTrainerService = personalTrainerService;
+        this.personalDashboardService = personalDashboardService;
     }
 
     @GetMapping
@@ -30,8 +34,8 @@ public class PersonalTrainerController {
     }
 
     @GetMapping("/dashboard/{id}")
-    public ResponseEntity<?> getDashboard(@PathVariable UUID id) {
-        return null;
+    public ResponseEntity<DashboardResponseDTO> getDashboard(@PathVariable UUID id) {
+        return ResponseEntity.ok().body(personalDashboardService.getDashboard(id));
     }
 
     @PostMapping
