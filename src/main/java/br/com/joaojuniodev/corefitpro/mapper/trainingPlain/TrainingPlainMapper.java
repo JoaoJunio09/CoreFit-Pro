@@ -42,6 +42,7 @@ public class TrainingPlainMapper implements ObjectMapper<TrainingPlain, Training
         TrainingPlain trainingPlain = new TrainingPlain();
         trainingPlain.setId(request.id());
         trainingPlain.setDescription(request.description());
+        trainingPlain.setActive(true);
         trainingPlain.setObjective(request.objective());
         trainingPlain.setPersonalTrainer(personalTrainer);
         trainingPlain.setTrainee(trainee);
@@ -55,6 +56,7 @@ public class TrainingPlainMapper implements ObjectMapper<TrainingPlain, Training
             personalTrainerMapper.toSummary(entity.getPersonalTrainer()),
             traineeMapper.toResponse(entity.getTrainee()),
             entity.getDescription(),
+            entity.getActive(),
             entity.getObjective()
         );
     }

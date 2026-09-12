@@ -11,5 +11,6 @@ public record TrainingPlainResponseDTO(
     PersonalTrainerSummaryDTO personalTrainer,
     TraineeResponseDTO trainee,
     String description,
+    Boolean active,
     ObjectiveTraining objective
 ) {}

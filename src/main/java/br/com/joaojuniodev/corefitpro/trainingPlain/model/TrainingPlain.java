@@ -30,6 +30,9 @@ public class TrainingPlain {
     @Column
     private String description;
 
+    @Column
+    private Boolean active;
+
     @Enumerated(EnumType.STRING)
     private ObjectiveTraining objective;
 
@@ -68,6 +71,14 @@ public class TrainingPlain {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public ObjectiveTraining getObjective() {

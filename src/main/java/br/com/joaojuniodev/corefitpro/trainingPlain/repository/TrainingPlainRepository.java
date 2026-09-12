@@ -25,4 +25,6 @@ public interface TrainingPlainRepository extends JpaRepository<TrainingPlain, UU
         "trainings.training.exerciseItems.exercise",
     })
     Optional<TrainingPlain> findById(UUID id);
+
+    Long countByActivated();
 }

@@ -29,6 +29,11 @@ public class PersonalTrainerController {
         return ResponseEntity.ok().body(personalTrainerService.getById(id));
     }
 
+    @GetMapping("/dashboard/{id}")
+    public ResponseEntity<?> getDashboard(@PathVariable UUID id) {
+        return null;
+    }
+
     @PostMapping
     public ResponseEntity<PersonalTrainerResponseDTO> create(@RequestBody PersonalTrainerRequestDTO personalTrainer) {
         return ResponseEntity.ok().body(personalTrainerService.create(personalTrainer));

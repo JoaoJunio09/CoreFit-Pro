@@ -3,6 +3,7 @@ CREATE TABLE training_plans (
     personal_trainer_id UUID         NULL,
     trainee_id          UUID         NOT NULL,
     description         VARCHAR(500) NULL,
+    active              BOOLEAN NULL,
     objective           VARCHAR(20)  NOT NULL,
     CONSTRAINT pk_training_plans PRIMARY KEY (id),
     CONSTRAINT uq_training_plans_trainee UNIQUE (trainee_id),
