@@ -38,18 +38,18 @@ public class PersonalDashboardService {
         var today = LocalDate.now().getDayOfWeek();
         var day = DaysOfWeek.valueOf(today.name());
 
-        long totalTrainingsOfToday = trainingItemRepository.countByDayOfWeek(day);
+        long totalTrainingsOfToday = trainingItemRepository.countByDayOfWeekAndPersonalTrainerId(day, id);
 
-        var activeTrainees = traineeRepository.countByUserEnabledTrue();
-        var activePlans = trainingPlainRepository.countByActiveTrue();
-        var pendings = trainingItemRepository.countByDayOfWeekAndCompletedFalse(day);
-        var workoutsCompletedToday = trainingItemRepository.countByDayOfWeekAndCompletedTrue(day);
+        var activeTrainees = traineeRepository.countByUserEnabledTrueAndPersonalTrainerId(id);
+        var activePlans = trainingPlainRepository.countByActiveTrueAndPersonalTrainerId(id);
+        var pendings = trainingItemRepository.countPendingByDayOfWeekAndPersonalTrainerId(day, id);
+        var workoutsCompletedToday = trainingItemRepository.countCompletedByDayOfWeekAndPersonalTrainerId(day, id);
         var percentageWorkoutsCompletedToday = workoutsCompletedToday == 0
             ? 0.0
             : (double) (workoutsCompletedToday * 100) / totalTrainingsOfToday;
-        var todayTrainings = trainingItemRepository.findByDayOfWeek(day);
-        var necessaryAttention = getAttentions();
-        var rhythmWeekly = getWeeklyRhythm();
+        var todayTrainings = trainingItemRepository.findByDayOfWeekAndPersonalTrainerId(day, id);
+        var necessaryAttention = getAttentions(id);
+        var rhythmWeekly = getWeeklyRhythm(id);
         var recentActivities = recentActivityService.getAll(id);
 
         return new DashboardResponseDTO(
@@ -65,8 +65,8 @@ public class PersonalDashboardService {
         );
     }
 
-    private List<AttentionResponseDTO> getAttentions() {
-        List<NotCompletedTrainingsProjection> results = trainingItemRepository.findTrainingsIncomplete();
+    private List<AttentionResponseDTO> getAttentions(UUID personalTrainerId) {
+        List<NotCompletedTrainingsProjection> results = trainingItemRepository.findTrainingsIncomplete(personalTrainerId);
 
         return results.stream()
             .map(r -> {
@@ -80,8 +80,8 @@ public class PersonalDashboardService {
             .toList();
     }
 
-    private List<WeeklyRhythmCompletedWorkoutsResponseDTO> getWeeklyRhythm() {
-        List<WeeklyRhythmProjection> results = trainingItemRepository.findWeeklyRhythm();
+    private List<WeeklyRhythmCompletedWorkoutsResponseDTO> getWeeklyRhythm(UUID personalTrainerId) {
+        List<WeeklyRhythmProjection> results = trainingItemRepository.findWeeklyRhythm(personalTrainerId);
 
         return results.stream().
             map(r ->  new WeeklyRhythmCompletedWorkoutsResponseDTO(

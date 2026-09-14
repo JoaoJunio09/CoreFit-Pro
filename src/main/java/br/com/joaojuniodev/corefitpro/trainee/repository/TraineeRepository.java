@@ -9,5 +9,5 @@ import java.util.UUID;
 @Repository
 public interface TraineeRepository extends JpaRepository<Trainee, UUID> {
 
-    Long countByUserEnabledTrue();
+    Long countByUserEnabledTrueAndPersonalTrainerId(UUID personalTrainerId);
 }
