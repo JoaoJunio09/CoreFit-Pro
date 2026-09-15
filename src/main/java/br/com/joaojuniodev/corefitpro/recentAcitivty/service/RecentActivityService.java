@@ -34,6 +34,7 @@ public class RecentActivityService {
             .findAll(spec.apply())
             .stream()
             .map(mapper::toResponse)
+            .limit(4)
             .toList();
     }
 

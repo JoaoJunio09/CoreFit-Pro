@@ -7,6 +7,7 @@ import br.com.joaojuniodev.corefitpro.mapper.muscleGroup.MuscleGroupMapper;
 import br.com.joaojuniodev.corefitpro.personalTrainer.repository.PersonalTrainerRepository;
 import br.com.joaojuniodev.corefitpro.training.dto.request.TrainingRequestDTO;
 import br.com.joaojuniodev.corefitpro.training.dto.response.TrainingResponseDTO;
+import br.com.joaojuniodev.corefitpro.training.dto.response.TrainingSummaryDTO;
 import br.com.joaojuniodev.corefitpro.training.model.Training;
 import org.springframework.stereotype.Component;
 
@@ -44,6 +45,14 @@ public class TrainingMapper implements ObjectMapper<Training, TrainingResponseDT
             entity.getDescription(),
             entity.getMuscleGroups().stream().map(muscleGroupMapper::toResponse).toList(),
             entity.getExerciseItems().stream().map(exerciseItemMapper::toResponse).toList()
+        );
+    }
+
+    public TrainingSummaryDTO toSummary(Training entity) {
+        return new TrainingSummaryDTO(
+            entity.getId(),
+            entity.getTitle(),
+            entity.getDescription()
         );
     }
 }

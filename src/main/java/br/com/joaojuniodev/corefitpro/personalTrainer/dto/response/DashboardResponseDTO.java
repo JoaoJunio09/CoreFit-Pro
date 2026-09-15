@@ -1,7 +1,7 @@
 package br.com.joaojuniodev.corefitpro.personalTrainer.dto.response;
 
 import br.com.joaojuniodev.corefitpro.recentAcitivty.dto.response.RecentActivityResponseDTO;
-import br.com.joaojuniodev.corefitpro.trainingItem.model.TrainingItem;
+import br.com.joaojuniodev.corefitpro.trainingItem.dto.response.TrainingItemSummaryDTO;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public record DashboardResponseDTO(
     Long pendings,
     Long workoutsCompletedToday,
     Double percentageWorkoutsCompletedToday,
-    List<TrainingItem> workoutsToday,
+    List<TrainingItemSummaryDTO> workoutsToday,
     List<AttentionResponseDTO> necessaryAttention,
     List<WeeklyRhythmCompletedWorkoutsResponseDTO> rhythmWeekly,
     List<RecentActivityResponseDTO> recentActivities

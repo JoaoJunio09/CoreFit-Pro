@@ -1,5 +1,6 @@
 package br.com.joaojuniodev.corefitpro.personalTrainer.service;
 
+import br.com.joaojuniodev.corefitpro.mapper.trainingItem.TrainingItemMapper;
 import br.com.joaojuniodev.corefitpro.personalTrainer.dto.response.AttentionResponseDTO;
 import br.com.joaojuniodev.corefitpro.personalTrainer.dto.response.DashboardResponseDTO;
 import br.com.joaojuniodev.corefitpro.personalTrainer.dto.response.WeeklyRhythmCompletedWorkoutsResponseDTO;
@@ -26,12 +27,14 @@ public class PersonalDashboardService {
     private final TraineeRepository traineeRepository;
     private final TrainingPlainRepository trainingPlainRepository;
     private final TrainingItemRepository trainingItemRepository;
+    private final TrainingItemMapper trainingItemMapper;
 
-    public PersonalDashboardService(RecentActivityService recentActivityService, TraineeRepository traineeRepository, TrainingPlainRepository trainingPlainRepository, TrainingItemRepository trainingItemRepository) {
+    public PersonalDashboardService(RecentActivityService recentActivityService, TraineeRepository traineeRepository, TrainingPlainRepository trainingPlainRepository, TrainingItemRepository trainingItemRepository, TrainingItemMapper trainingItemMapper) {
         this.recentActivityService = recentActivityService;
         this.traineeRepository = traineeRepository;
         this.trainingPlainRepository = trainingPlainRepository;
         this.trainingItemRepository = trainingItemRepository;
+        this.trainingItemMapper = trainingItemMapper;
     }
 
     public DashboardResponseDTO getDashboard(UUID id) {
@@ -47,7 +50,10 @@ public class PersonalDashboardService {
         var percentageWorkoutsCompletedToday = workoutsCompletedToday == 0
             ? 0.0
             : (double) (workoutsCompletedToday * 100) / totalTrainingsOfToday;
-        var todayTrainings = trainingItemRepository.findByDayOfWeekAndPersonalTrainerId(day, id);
+        var todayTrainings = trainingItemRepository.findByDayOfWeekAndPersonalTrainerId(day, id)
+            .stream()
+            .map(trainingItemMapper::toSummary)
+            .toList();
         var necessaryAttention = getAttentions(id);
         var rhythmWeekly = getWeeklyRhythm(id);
         var recentActivities = recentActivityService.getAll(id);
@@ -73,7 +79,6 @@ public class PersonalDashboardService {
                 final String title = r.getTraineeName();
                 final String message = "Faltou aos últimos" + r.getCountIncompleteTraining() + " treinos.";
                 final String url = "http://localhost:5173/personal/alunos";
-
                 return new AttentionResponseDTO(title, message, url);
             })
             .limit(3)

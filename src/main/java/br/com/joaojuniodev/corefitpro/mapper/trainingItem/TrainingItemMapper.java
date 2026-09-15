@@ -6,6 +6,7 @@ import br.com.joaojuniodev.corefitpro.mapper.training.TrainingMapper;
 import br.com.joaojuniodev.corefitpro.training.repository.TrainingRepository;
 import br.com.joaojuniodev.corefitpro.trainingItem.dto.request.TrainingItemRequestDTO;
 import br.com.joaojuniodev.corefitpro.trainingItem.dto.response.TrainingItemResponseDTO;
+import br.com.joaojuniodev.corefitpro.trainingItem.dto.response.TrainingItemSummaryDTO;
 import br.com.joaojuniodev.corefitpro.trainingItem.model.TrainingItem;
 import br.com.joaojuniodev.corefitpro.trainingPlain.repository.TrainingPlainRepository;
 import org.springframework.stereotype.Component;
@@ -46,6 +47,15 @@ public class TrainingItemMapper implements ObjectMapper<TrainingItem, TrainingIt
             entity.getDayOfWeek(),
             entity.getCompleted(),
             trainingMapper.toResponse(entity.getTraining())
+        );
+    }
+
+    public TrainingItemSummaryDTO toSummary(TrainingItem entity) {
+        return new TrainingItemSummaryDTO(
+            entity.getId(),
+            entity.getDayOfWeek(),
+            entity.getCompleted(),
+            trainingMapper.toSummary(entity.getTraining())
         );
     }
 }
