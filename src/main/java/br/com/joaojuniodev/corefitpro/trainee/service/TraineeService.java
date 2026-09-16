@@ -3,10 +3,18 @@ package br.com.joaojuniodev.corefitpro.trainee.service;
 import br.com.joaojuniodev.corefitpro.exceptions.NotFoundException;
 import br.com.joaojuniodev.corefitpro.mapper.trainee.TraineeMapper;
 import br.com.joaojuniodev.corefitpro.trainee.dto.request.TraineeRequestDTO;
+import br.com.joaojuniodev.corefitpro.trainee.dto.response.TraineeDetailsDTO;
 import br.com.joaojuniodev.corefitpro.trainee.dto.response.TraineeResponseDTO;
+import br.com.joaojuniodev.corefitpro.trainee.model.Trainee;
 import br.com.joaojuniodev.corefitpro.trainee.repository.TraineeRepository;
+import br.com.joaojuniodev.corefitpro.trainee.repository.spec.TraineeSpecification;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,12 +32,29 @@ public class TraineeService {
         this.traineeMapper = traineeMapper;
     }
 
-    public List<TraineeResponseDTO> getAll() {
+    public List<TraineeResponseDTO> getAll(UUID personalTrainerId) {
         logger.info("Getting All Trainees");
 
-        return traineeRepository.findAll()
+        TraineeSpecification spec = new TraineeSpecification();
+        spec.addToSpecifications(personalTrainerId);
+
+        return traineeRepository
+            .findAll(spec.apply())
             .stream()
             .map(traineeMapper::toResponse)
+            .toList();
+    }
+
+    public List<TraineeDetailsDTO> getAllByPersonal(UUID personalTrainerId) {
+        logger.info("Getting All Trainees Details by Personal");
+
+        TraineeSpecification spec = new TraineeSpecification();
+        spec.addToSpecifications(personalTrainerId);
+
+        return traineeRepository
+            .findAll(spec.apply())
+            .stream()
+            .map(traineeMapper::toDetails)
             .toList();
     }
 

@@ -20,8 +20,10 @@ public class TraineeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TraineeResponseDTO>> getAll() {
-        return ResponseEntity.ok().body(traineeService.getAll());
+    public ResponseEntity<List<TraineeResponseDTO>> getAll(
+        @RequestParam(name = "personalTrainerId", required = false) UUID personalTrainerId
+    ) {
+        return ResponseEntity.ok().body(traineeService.getAll(personalTrainerId));
     }
 
     @GetMapping("/{id}")

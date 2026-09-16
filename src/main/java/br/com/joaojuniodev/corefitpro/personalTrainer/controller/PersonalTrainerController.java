@@ -5,6 +5,8 @@ import br.com.joaojuniodev.corefitpro.personalTrainer.dto.response.DashboardResp
 import br.com.joaojuniodev.corefitpro.personalTrainer.dto.response.PersonalTrainerResponseDTO;
 import br.com.joaojuniodev.corefitpro.personalTrainer.service.PersonalDashboardService;
 import br.com.joaojuniodev.corefitpro.personalTrainer.service.PersonalTrainerService;
+import br.com.joaojuniodev.corefitpro.trainee.dto.response.TraineeDetailsDTO;
+import br.com.joaojuniodev.corefitpro.trainee.service.TraineeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +19,12 @@ public class PersonalTrainerController {
 
     private final PersonalTrainerService personalTrainerService;
     private final PersonalDashboardService personalDashboardService;
+    private final TraineeService traineeService;
 
-    public PersonalTrainerController(PersonalTrainerService personalTrainerService, PersonalDashboardService personalDashboardService) {
+    public PersonalTrainerController(PersonalTrainerService personalTrainerService, PersonalDashboardService personalDashboardService, TraineeService traineeService) {
         this.personalTrainerService = personalTrainerService;
         this.personalDashboardService = personalDashboardService;
+        this.traineeService = traineeService;
     }
 
     @GetMapping
@@ -36,6 +40,11 @@ public class PersonalTrainerController {
     @GetMapping("/dashboard/{id}")
     public ResponseEntity<DashboardResponseDTO> getDashboard(@PathVariable UUID id) {
         return ResponseEntity.ok().body(personalDashboardService.getDashboard(id));
+    }
+
+    @GetMapping("/trainees/{id}")
+    public ResponseEntity<List<TraineeDetailsDTO>> getTrainees(@PathVariable UUID id) {
+        return ResponseEntity.ok().body(traineeService.getAllByPersonal(id));
     }
 
     @PostMapping

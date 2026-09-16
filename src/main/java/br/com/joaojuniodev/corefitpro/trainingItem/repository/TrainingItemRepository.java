@@ -53,6 +53,13 @@ public interface TrainingItemRepository extends JpaRepository<TrainingItem, UUID
     @Query("""
         SELECT ti
         FROM TrainingItem ti
+        WHERE ti.trainingPlain.trainee.id = :traineeId
+    """)
+    List<TrainingItem> findByTrainee(@Param("traineeId") UUID traineeId);
+
+    @Query("""
+        SELECT ti
+        FROM TrainingItem ti
         WHERE ti.dayOfWeek = :dayOfWeek
           AND ti.trainingPlain.personalTrainer.id = :personalTrainerId
     """)
