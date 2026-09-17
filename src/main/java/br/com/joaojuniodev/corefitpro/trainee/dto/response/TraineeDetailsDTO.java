@@ -1,10 +1,10 @@
 package br.com.joaojuniodev.corefitpro.trainee.dto.response;
 
-import java.util.UUID;
+import br.com.joaojuniodev.corefitpro.physicalAssessment.dto.response.PhysicalAssessmentResponseDTO;
+
+import java.util.List;
 
 public record TraineeDetailsDTO(
-    UUID id,
-    String firstName,
-    Double weeklyProgressPercentage
-) {
-}
+    TraineeResponseDTO trainee,
+    List<PhysicalAssessmentResponseDTO> physicalAssessments
+) {}

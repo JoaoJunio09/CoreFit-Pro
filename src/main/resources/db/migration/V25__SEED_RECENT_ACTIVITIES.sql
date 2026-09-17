@@ -1,5 +1,3 @@
--- Atividades recentes de cada personal trainer, com timestamps variados nos últimos dias
-
 DO $$
 DECLARE
     lucas_pt_id    UUID;

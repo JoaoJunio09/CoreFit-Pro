@@ -1,14 +1,12 @@
--- 9 treinos (templates reutilizáveis), 3 por personal trainer, com grupos musculares vinculados
-
 DO $$
 DECLARE
     lucas_pt_id    UUID;
     fernanda_pt_id UUID;
     rafael_pt_id   UUID;
 
-    t1_id UUID; t2_id UUID; t3_id UUID; -- Lucas
-    t4_id UUID; t5_id UUID; t6_id UUID; -- Fernanda
-    t7_id UUID; t8_id UUID; t9_id UUID; -- Rafael
+    t1_id UUID; t2_id UUID; t3_id UUID;
+    t4_id UUID; t5_id UUID; t6_id UUID;
+    t7_id UUID; t8_id UUID; t9_id UUID;
 BEGIN
     SELECT id INTO lucas_pt_id    FROM personals_trainers WHERE first_name = 'Lucas';
     SELECT id INTO fernanda_pt_id FROM personals_trainers WHERE first_name = 'Fernanda';

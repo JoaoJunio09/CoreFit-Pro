@@ -1,5 +1,3 @@
--- 3 personal trainers de teste (username/password iguais ao primeiro nome)
-
 DO $$
 DECLARE
     lucas_user_id    UUID := gen_random_uuid();

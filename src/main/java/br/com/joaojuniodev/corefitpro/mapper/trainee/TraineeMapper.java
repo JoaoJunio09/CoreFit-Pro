@@ -2,14 +2,17 @@ package br.com.joaojuniodev.corefitpro.mapper.trainee;
 
 import br.com.joaojuniodev.corefitpro.exceptions.NotFoundException;
 import br.com.joaojuniodev.corefitpro.mapper.ObjectMapper;
+import br.com.joaojuniodev.corefitpro.mapper.physicalAssessment.PhysicalAssessmentMapper;
 import br.com.joaojuniodev.corefitpro.personalTrainer.repository.PersonalTrainerRepository;
 import br.com.joaojuniodev.corefitpro.security.repository.UserRepository;
 import br.com.joaojuniodev.corefitpro.trainee.dto.request.TraineeRequestDTO;
 import br.com.joaojuniodev.corefitpro.trainee.dto.response.TraineeDetailsDTO;
 import br.com.joaojuniodev.corefitpro.trainee.dto.response.TraineeResponseDTO;
+import br.com.joaojuniodev.corefitpro.trainee.dto.response.TraineeSummaryDTO;
 import br.com.joaojuniodev.corefitpro.trainee.model.Trainee;
 import br.com.joaojuniodev.corefitpro.trainingItem.model.TrainingItem;
 import br.com.joaojuniodev.corefitpro.trainingItem.repository.TrainingItemRepository;
+import br.com.joaojuniodev.corefitpro.trainingPlain.repository.TrainingPlainRepository;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -21,11 +24,15 @@ public class TraineeMapper implements ObjectMapper<Trainee, TraineeResponseDTO, 
     private final PersonalTrainerRepository personalTrainerRepository;
     private final UserRepository userRepository;
     private final TrainingItemRepository trainingItemRepository;
+    private final TrainingPlainRepository trainingPlainRepository;
+    private final PhysicalAssessmentMapper physicalAssessmentMapper;
 
-    public TraineeMapper(PersonalTrainerRepository personalTrainerRepository, UserRepository userRepository, TrainingItemRepository trainingItemRepository) {
+    public TraineeMapper(PersonalTrainerRepository personalTrainerRepository, UserRepository userRepository, TrainingItemRepository trainingItemRepository, TrainingPlainRepository trainingPlainRepository, PhysicalAssessmentMapper physicalAssessmentMapper) {
         this.personalTrainerRepository = personalTrainerRepository;
         this.userRepository = userRepository;
         this.trainingItemRepository = trainingItemRepository;
+        this.trainingPlainRepository = trainingPlainRepository;
+        this.physicalAssessmentMapper = physicalAssessmentMapper;
     }
 
     @Override
@@ -45,14 +52,11 @@ public class TraineeMapper implements ObjectMapper<Trainee, TraineeResponseDTO, 
 
     @Override
     public TraineeResponseDTO toResponse(Trainee entity) {
-        return new TraineeResponseDTO(
-            entity.getId(),
-            entity.getFirstName(),
-            entity.getLastName()
-        );
-    }
+        var trainingPlainForTrainee = trainingPlainRepository.findByTrainee(entity.getId())
+            .orElseThrow(() -> new NotFoundException("Not found Training Plain for Trainee Id: " + entity.getId()));
 
-    public TraineeDetailsDTO toDetails(Trainee entity) {
+        var lastPhysicalAssessment = entity.getPhysicalAssessments().get(0);
+
         var trainingsOfWeekly = trainingItemRepository.findByTrainee(entity.getId());
 
         long totalTrainings = trainingsOfWeekly.size();
@@ -69,10 +73,32 @@ public class TraineeMapper implements ObjectMapper<Trainee, TraineeResponseDTO, 
             .setScale(2, RoundingMode.HALF_UP)
             .doubleValue();
 
-        return new TraineeDetailsDTO(
+        return new TraineeResponseDTO(
             entity.getId(),
             entity.getFirstName(),
+            entity.getLastName(),
+            lastPhysicalAssessment.getAge(),
+            lastPhysicalAssessment.getWeight(),
+            trainingPlainForTrainee.getObjective(),
+            trainingPlainForTrainee.getActive(),
             progress
+        );
+    }
+
+    public TraineeSummaryDTO toSummary(Trainee entity) {
+        return new TraineeSummaryDTO(
+            entity.getId(),
+            entity.getFirstName(),
+            entity.getLastName()
+        );
+    }
+
+    public TraineeDetailsDTO toDetails(Trainee entity) {
+        return new TraineeDetailsDTO(
+            toResponse(entity),
+            entity.getPhysicalAssessments()
+                .stream()
+                .map(physicalAssessmentMapper::toResponse).toList()
         );
     }
 }

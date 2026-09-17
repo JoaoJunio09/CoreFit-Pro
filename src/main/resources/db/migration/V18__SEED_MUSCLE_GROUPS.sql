@@ -1,4 +1,3 @@
--- Grupos musculares organizados por região do corpo (superiores, tronco/core, inferiores)
 INSERT INTO muscle_groups (id, name) VALUES
     (gen_random_uuid(), 'Peito'),
     (gen_random_uuid(), 'Costas'),

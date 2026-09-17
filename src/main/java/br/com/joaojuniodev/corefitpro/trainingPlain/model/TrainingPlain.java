@@ -1,10 +1,8 @@
 package br.com.joaojuniodev.corefitpro.trainingPlain.model;
 
-import br.com.joaojuniodev.corefitpro.trainingItem.model.TrainingItem;
-import br.com.joaojuniodev.corefitpro.trainingPlain.enums.ObjectiveTraining;
 import br.com.joaojuniodev.corefitpro.personalTrainer.model.PersonalTrainer;
 import br.com.joaojuniodev.corefitpro.trainee.model.Trainee;
-import br.com.joaojuniodev.corefitpro.training.model.Training;
+import br.com.joaojuniodev.corefitpro.trainingItem.model.TrainingItem;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -33,8 +31,8 @@ public class TrainingPlain {
     @Column
     private Boolean active;
 
-    @Enumerated(EnumType.STRING)
-    private ObjectiveTraining objective;
+    @Column
+    private String objective;
 
     @OneToMany(mappedBy = "trainingPlain")
     private List<TrainingItem> trainings;
@@ -81,11 +79,11 @@ public class TrainingPlain {
         this.active = active;
     }
 
-    public ObjectiveTraining getObjective() {
+    public String getObjective() {
         return objective;
     }
 
-    public void setObjective(ObjectiveTraining objective) {
+    public void setObjective(String objective) {
         this.objective = objective;
     }
 

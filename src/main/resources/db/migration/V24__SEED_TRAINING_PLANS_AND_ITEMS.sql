@@ -1,6 +1,3 @@
--- Um plano de treino por aluno (respeitando a constraint de 1 plano por trainee),
--- cada um com seus training_item (dia da semana + treino do catálogo do personal)
-
 DO $$
 DECLARE
     mateus_trainee_id  UUID;

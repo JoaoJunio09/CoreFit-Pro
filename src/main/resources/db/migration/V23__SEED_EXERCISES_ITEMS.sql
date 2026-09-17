@@ -1,5 +1,3 @@
--- Exercícios com repetições/séries dentro de cada treino
-
 INSERT INTO exercises_items (id, exercise_id, repetitions, series, training_id)
 SELECT gen_random_uuid(), e.id, v.repetitions, v.series, tr.id
 FROM trainings tr, (VALUES

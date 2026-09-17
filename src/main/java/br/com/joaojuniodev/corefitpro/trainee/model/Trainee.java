@@ -1,11 +1,13 @@
 package br.com.joaojuniodev.corefitpro.trainee.model;
 
 import br.com.joaojuniodev.corefitpro.personalTrainer.model.PersonalTrainer;
+import br.com.joaojuniodev.corefitpro.physicalAssessment.model.PhysicalAssessment;
 import br.com.joaojuniodev.corefitpro.security.model.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -30,6 +32,9 @@ public class Trainee {
     @ManyToOne
     @JoinColumn(name = "personal_trainer_id")
     private PersonalTrainer personalTrainer;
+
+    @OneToMany(mappedBy = "trainee")
+    private List<PhysicalAssessment> physicalAssessments;
 
     public Trainee() {}
 
@@ -71,6 +76,14 @@ public class Trainee {
 
     public void setPersonalTrainer(PersonalTrainer personalTrainer) {
         this.personalTrainer = personalTrainer;
+    }
+
+    public List<PhysicalAssessment> getPhysicalAssessments() {
+        return physicalAssessments;
+    }
+
+    public void setPhysicalAssessments(List<PhysicalAssessment> physicalAssessments) {
+        this.physicalAssessments = physicalAssessments;
     }
 
     @Override

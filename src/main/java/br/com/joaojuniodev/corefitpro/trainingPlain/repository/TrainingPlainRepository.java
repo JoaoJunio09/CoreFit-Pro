@@ -3,6 +3,7 @@ package br.com.joaojuniodev.corefitpro.trainingPlain.repository;
 import br.com.joaojuniodev.corefitpro.trainingPlain.model.TrainingPlain;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,6 +26,13 @@ public interface TrainingPlainRepository extends JpaRepository<TrainingPlain, UU
         "trainings.training.exerciseItems.exercise",
     })
     Optional<TrainingPlain> findById(UUID id);
+
+    @Query("""
+        SELECT tp
+        FROM TrainingPlain tp
+        WHERE tp.trainee.id = :traineeId
+    """)
+    Optional<TrainingPlain> findByTrainee(UUID traineeId);
 
     Long countByActiveTrueAndPersonalTrainerId(UUID personalTrainerId);
 }
