@@ -85,14 +85,6 @@ public class TraineeMapper implements ObjectMapper<Trainee, TraineeResponseDTO, 
         );
     }
 
-    public TraineeSummaryDTO toSummary(Trainee entity) {
-        return new TraineeSummaryDTO(
-            entity.getId(),
-            entity.getFirstName(),
-            entity.getLastName()
-        );
-    }
-
     public TraineeDetailsDTO toDetails(Trainee entity) {
         return new TraineeDetailsDTO(
             toResponse(entity),

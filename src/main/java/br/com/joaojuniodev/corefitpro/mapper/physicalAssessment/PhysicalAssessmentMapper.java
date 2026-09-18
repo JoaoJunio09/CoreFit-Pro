@@ -2,7 +2,6 @@ package br.com.joaojuniodev.corefitpro.mapper.physicalAssessment;
 
 import br.com.joaojuniodev.corefitpro.exceptions.NotFoundException;
 import br.com.joaojuniodev.corefitpro.mapper.ObjectMapper;
-import br.com.joaojuniodev.corefitpro.mapper.trainee.TraineeMapper;
 import br.com.joaojuniodev.corefitpro.physicalAssessment.dto.request.PhysicalAssessmentRequestDTO;
 import br.com.joaojuniodev.corefitpro.physicalAssessment.dto.response.PhysicalAssessmentResponseDTO;
 import br.com.joaojuniodev.corefitpro.physicalAssessment.model.PhysicalAssessment;
@@ -13,11 +12,9 @@ import org.springframework.stereotype.Component;
 public class PhysicalAssessmentMapper implements ObjectMapper<PhysicalAssessment, PhysicalAssessmentResponseDTO, PhysicalAssessmentRequestDTO> {
 
     private TraineeRepository traineeRepository;
-    private TraineeMapper traineeMapper;
 
-    public PhysicalAssessmentMapper(TraineeRepository traineeRepository, TraineeMapper traineeMapper) {
+    public PhysicalAssessmentMapper(TraineeRepository traineeRepository) {
         this.traineeRepository = traineeRepository;
-        this.traineeMapper = traineeMapper;
     }
 
     @Override
@@ -57,7 +54,6 @@ public class PhysicalAssessmentMapper implements ObjectMapper<PhysicalAssessment
     public PhysicalAssessmentResponseDTO toResponse(PhysicalAssessment entity) {
         return new PhysicalAssessmentResponseDTO(
             entity.getId(),
-            traineeMapper.toSummary(entity.getTrainee()),
             entity.getRegisteredAt(),
             entity.getAge(),
             entity.getWeight(),

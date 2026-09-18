@@ -8,7 +8,6 @@ import java.util.UUID;
 
 public record PhysicalAssessmentResponseDTO(
     UUID id,
-    TraineeSummaryDTO trainee,
     LocalDate registeredAt,
     Integer age,
     Double weight,
