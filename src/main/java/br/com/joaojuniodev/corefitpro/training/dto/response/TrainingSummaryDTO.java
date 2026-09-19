@@ -5,5 +5,6 @@ import java.util.UUID;
 public record TrainingSummaryDTO(
     UUID id,
     String title,
-    String description
+    String description,
+    Long numberOfExercises
 ) {}

@@ -10,6 +10,8 @@ public record TrainingResponseDTO(
     UUID id,
     String title,
     String description,
+    Long numberOfExercises,
+    Long numberOfTrainees,
     List<MuscleGroupResponseDTO> muscleGroups,
     List<ExerciseItemResponseDTO> exercises
 ) {

@@ -13,13 +13,15 @@ import br.com.joaojuniodev.corefitpro.training.dto.request.TrainingRequestDTO;
 import br.com.joaojuniodev.corefitpro.training.dto.response.TrainingResponseDTO;
 import br.com.joaojuniodev.corefitpro.training.model.Training;
 import br.com.joaojuniodev.corefitpro.training.repository.TrainingRepository;
+import br.com.joaojuniodev.corefitpro.training.repository.spec.TrainingSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -40,10 +42,14 @@ public class TrainingService {
         this.exerciseItemMapper = exerciseItemMapper;
     }
 
-    public List<TrainingResponseDTO> getAll() {
+    public List<TrainingResponseDTO> getAll(UUID personalTrainerId) {
         logger.info("Getting All Trainings");
 
-        return trainingRepository.findAll()
+        TrainingSpecification spec = new TrainingSpecification();
+        spec.addToSpecifications(personalTrainerId);
+
+        return trainingRepository
+            .findAll(spec.apply())
             .stream()
             .map(trainingMapper::toResponse)
             .toList();
@@ -66,12 +72,12 @@ public class TrainingService {
 
         Training entity = trainingMapper.toEntity(training);
 
-        List<MuscleGroup> muscleGroups = muscleGroupRepository.findAllById(training.muscleGroupsId());
+        Set<MuscleGroup> muscleGroups = (Set<MuscleGroup>) muscleGroupRepository.findAllById(training.muscleGroupsId());
         entity.setMuscleGroups(muscleGroups);
 
         var saved = trainingRepository.save(entity);
 
-        List<ExerciseItem> exerciseItems = new ArrayList<>();
+        Set<ExerciseItem> exerciseItems = new HashSet<>();
 
         for (ExerciseItemRequestDTO exerciseItem : training.exerciseItems()) {
             var exerciseItemEntity = exerciseItemMapper.toEntity(exerciseItem);
@@ -94,12 +100,12 @@ public class TrainingService {
         entity.setTitle(training.title());
         entity.setDescription(training.description());
 
-        List<MuscleGroup> muscleGroups = muscleGroupRepository.findAllById(training.muscleGroupsId());
+        Set<MuscleGroup> muscleGroups = (Set<MuscleGroup>) muscleGroupRepository.findAllById(training.muscleGroupsId());
         entity.setMuscleGroups(muscleGroups);
 
         var saved = trainingRepository.save(entity);
 
-        List<ExerciseItem> exerciseItems = new ArrayList<>();
+        Set<ExerciseItem> exerciseItems = new HashSet<>();
 
         for (ExerciseItemRequestDTO exerciseItem : training.exerciseItems()) {
             var exerciseItemEntity = exerciseItemMapper.toEntity(exerciseItem);

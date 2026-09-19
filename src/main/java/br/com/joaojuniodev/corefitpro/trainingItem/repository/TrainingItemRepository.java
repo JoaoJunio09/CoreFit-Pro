@@ -51,6 +51,13 @@ public interface TrainingItemRepository extends JpaRepository<TrainingItem, UUID
     );
 
     @Query("""
+        SELECT COUNT(DISTINCT ti.trainingPlain.trainee.id)
+        FROM TrainingItem ti
+        WHERE ti.training.id = :trainingId
+    """)
+    Long countTraineesUseThisTraining(UUID trainingId);
+
+    @Query("""
         SELECT ti
         FROM TrainingItem ti
         WHERE ti.trainingPlain.trainee.id = :traineeId

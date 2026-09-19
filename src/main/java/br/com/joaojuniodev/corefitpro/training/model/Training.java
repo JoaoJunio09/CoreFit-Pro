@@ -5,9 +5,7 @@ import br.com.joaojuniodev.corefitpro.personalTrainer.model.PersonalTrainer;
 import br.com.joaojuniodev.corefitpro.muscleGroup.model.MuscleGroup;
 import jakarta.persistence.*;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Table(name = "trainings")
 @Entity
@@ -33,10 +31,10 @@ public class Training {
         joinColumns = @JoinColumn(name = "training_id"),
         inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
     )
-    private List<MuscleGroup> muscleGroups;
+    private Set<MuscleGroup> muscleGroups = new HashSet<>();;
 
     @OneToMany(mappedBy = "training")
-    private List<ExerciseItem> exerciseItems;
+    private Set<ExerciseItem> exerciseItems = new HashSet<>();
 
     public Training() {}
 
@@ -72,19 +70,19 @@ public class Training {
         this.personalTrainer = personalTrainer;
     }
 
-    public List<MuscleGroup> getMuscleGroups() {
+    public Set<MuscleGroup> getMuscleGroups() {
         return muscleGroups;
     }
 
-    public void setMuscleGroups(List<MuscleGroup> muscleGroups) {
+    public void setMuscleGroups(Set<MuscleGroup> muscleGroups) {
         this.muscleGroups = muscleGroups;
     }
 
-    public List<ExerciseItem> getExerciseItems() {
+    public Set<ExerciseItem> getExerciseItems() {
         return exerciseItems;
     }
 
-    public void setExerciseItems(List<ExerciseItem> exerciseItems) {
+    public void setExerciseItems(Set<ExerciseItem> exerciseItems) {
         this.exerciseItems = exerciseItems;
     }
 
