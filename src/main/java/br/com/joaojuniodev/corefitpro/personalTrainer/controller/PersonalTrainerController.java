@@ -33,6 +33,11 @@ public class PersonalTrainerController {
         return ResponseEntity.ok().body(personalTrainerService.getById(id));
     }
 
+    @GetMapping("/username/{username}")
+    public ResponseEntity<PersonalTrainerResponseDTO> getByUsername(@PathVariable String username) {
+        return ResponseEntity.ok().body(personalTrainerService.getByUsername(username));
+    }
+
     @GetMapping("/dashboard/{id}")
     public ResponseEntity<DashboardResponseDTO> getDashboard(@PathVariable UUID id) {
         return ResponseEntity.ok().body(personalDashboardService.getDashboard(id));

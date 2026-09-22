@@ -41,6 +41,14 @@ public class PersonalTrainerService {
         return personalTrainerMapper.toResponse(entity);
     }
 
+    public PersonalTrainerResponseDTO getByUsername(String username) {
+        logger.info("Getting Personal by Username");
+
+        var entity = personalTrainerRepository.findByUsername(username)
+            .orElseThrow(() -> new NotFoundException("Not found this Personal Trainer by username: " + username));
+        return personalTrainerMapper.toResponse(entity);
+    }
+
     public PersonalTrainerResponseDTO create(PersonalTrainerRequestDTO personalTrainer) {
         logger.info("Creating new Personal Trainer");
 
