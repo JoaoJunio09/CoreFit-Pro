@@ -1,7 +1,11 @@
 CREATE TABLE exercises (
-    id    UUID         NOT NULL DEFAULT gen_random_uuid(),
-    name  VARCHAR(100) NOT NULL,
-    photo VARCHAR(255) NULL,
-    video VARCHAR(255) NULL,
-    CONSTRAINT pk_exercises PRIMARY KEY (id)
+    id                  UUID         NOT NULL DEFAULT gen_random_uuid(),
+    name                VARCHAR(100) NOT NULL,
+    system              BOOLEAN      NOT NULL DEFAULT TRUE,
+    favorite            BOOLEAN      NOT NULL DEFAULT FALSE,
+    photo               VARCHAR(255) NULL,
+    video               VARCHAR(255) NULL,
+    personal_trainer_id UUID         NULL,
+    CONSTRAINT pk_exercises PRIMARY KEY (id),
+    CONSTRAINT fk_exercises_personal_trainer FOREIGN KEY (personal_trainer_id) REFERENCES personals_trainers (id) ON DELETE CASCADE
 );

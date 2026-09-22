@@ -1,7 +1,11 @@
 package br.com.joaojuniodev.corefitpro.exercise.model;
 
+import br.com.joaojuniodev.corefitpro.muscleGroup.model.MuscleGroup;
+import br.com.joaojuniodev.corefitpro.personalTrainer.model.PersonalTrainer;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -17,10 +21,28 @@ public class Exercise {
     private String name;
 
     @Column
+    private Boolean system;
+
+    @Column
+    private Boolean favorite;
+
+    @Column
     private String photo;
 
     @Column
     private String video;
+
+    @ManyToOne
+    @JoinColumn(name = "personal_trainer_id")
+    private PersonalTrainer personalTrainer;
+
+    @ManyToMany
+    @JoinTable(
+        name = "exercise_muscle_groups",
+        joinColumns = @JoinColumn(name = "exercise_id"),
+        inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
+    )
+    private List<MuscleGroup> muscleGroups = new ArrayList<>();
 
     public Exercise() {}
 
@@ -40,6 +62,22 @@ public class Exercise {
         this.name = name;
     }
 
+    public Boolean getSystem() {
+        return system;
+    }
+
+    public void setSystem(Boolean system) {
+        this.system = system;
+    }
+
+    public Boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
+    }
+
     public String getPhoto() {
         return photo;
     }
@@ -54,6 +92,22 @@ public class Exercise {
 
     public void setVideo(String video) {
         this.video = video;
+    }
+
+    public PersonalTrainer getPersonalTrainer() {
+        return personalTrainer;
+    }
+
+    public void setPersonalTrainer(PersonalTrainer personalTrainer) {
+        this.personalTrainer = personalTrainer;
+    }
+
+    public List<MuscleGroup> getMuscleGroups() {
+        return muscleGroups;
+    }
+
+    public void setMuscleGroups(List<MuscleGroup> muscleGroups) {
+        this.muscleGroups = muscleGroups;
     }
 
     @Override

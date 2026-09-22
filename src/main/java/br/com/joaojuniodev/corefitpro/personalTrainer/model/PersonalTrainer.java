@@ -1,15 +1,13 @@
 package br.com.joaojuniodev.corefitpro.personalTrainer.model;
 
+import br.com.joaojuniodev.corefitpro.exercise.model.Exercise;
 import br.com.joaojuniodev.corefitpro.trainee.model.Trainee;
 import br.com.joaojuniodev.corefitpro.training.model.Training;
 import br.com.joaojuniodev.corefitpro.trainingPlain.model.TrainingPlain;
 import br.com.joaojuniodev.corefitpro.security.model.User;
 import jakarta.persistence.*;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "personals_trainers")
@@ -30,13 +28,16 @@ public class PersonalTrainer {
     private User user;
 
     @OneToMany(mappedBy = "personalTrainer")
-    private Set<Trainee> trainees;
+    private Set<Exercise> exercises = new HashSet<>();
 
     @OneToMany(mappedBy = "personalTrainer")
-    private Set<TrainingPlain> trainingPlains;
+    private Set<Trainee> trainees = new HashSet<>();
 
     @OneToMany(mappedBy = "personalTrainer")
-    private List<Training> trainings;
+    private Set<TrainingPlain> trainingPlains = new HashSet<>();
+
+    @OneToMany(mappedBy = "personalTrainer")
+    private List<Training> trainings = new ArrayList<>();
 
     public PersonalTrainer() {}
 
@@ -70,6 +71,14 @@ public class PersonalTrainer {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(Set<Exercise> exercises) {
+        this.exercises = exercises;
     }
 
     public Set<Trainee> getTrainees() {

@@ -4,6 +4,7 @@ import br.com.joaojuniodev.corefitpro.exceptions.NotFoundException;
 import br.com.joaojuniodev.corefitpro.exercise.dto.request.ExerciseRequestDTO;
 import br.com.joaojuniodev.corefitpro.exercise.dto.response.ExerciseResponseDTO;
 import br.com.joaojuniodev.corefitpro.exercise.repository.ExerciseRepository;
+import br.com.joaojuniodev.corefitpro.exercise.repository.spec.ExerciseSpecification;
 import br.com.joaojuniodev.corefitpro.mapper.exercise.ExerciseMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +25,14 @@ public class ExerciseService {
         this.mapper = mapper;
     }
 
-    public List<ExerciseResponseDTO> getAll() {
+    public List<ExerciseResponseDTO> getAll(UUID personalTrainerId) {
         logger.info("Getting All Exercises");
 
-        return exerciseRepository.findAll()
+        ExerciseSpecification spec = new ExerciseSpecification();
+        spec.addToSpecifications(personalTrainerId);
+
+        return exerciseRepository
+            .findAll(spec.apply())
             .stream()
             .map(mapper::toResponse)
             .toList();

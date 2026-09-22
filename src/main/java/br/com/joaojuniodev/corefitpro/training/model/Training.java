@@ -31,7 +31,7 @@ public class Training {
         joinColumns = @JoinColumn(name = "training_id"),
         inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
     )
-    private Set<MuscleGroup> muscleGroups = new HashSet<>();;
+    private Set<MuscleGroup> muscleGroups = new HashSet<>();
 
     @OneToMany(mappedBy = "training")
     private Set<ExerciseItem> exerciseItems = new HashSet<>();
