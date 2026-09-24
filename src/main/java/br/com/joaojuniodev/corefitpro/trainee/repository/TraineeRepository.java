@@ -13,6 +13,7 @@ import java.util.UUID;
 @Repository
 public interface TraineeRepository extends JpaRepository<Trainee, UUID> {
 
+    @EntityGraph(attributePaths = {"physicalAssessments"})
     List<Trainee> findAll(Specification<Trainee> spec);
 
     @EntityGraph(attributePaths = {"physicalAssessments"})

@@ -2,6 +2,7 @@ package br.com.joaojuniodev.corefitpro.mapper.trainingItem;
 
 import br.com.joaojuniodev.corefitpro.exceptions.NotFoundException;
 import br.com.joaojuniodev.corefitpro.mapper.ObjectMapper;
+import br.com.joaojuniodev.corefitpro.mapper.trainee.TraineeMapper;
 import br.com.joaojuniodev.corefitpro.mapper.training.TrainingMapper;
 import br.com.joaojuniodev.corefitpro.training.repository.TrainingRepository;
 import br.com.joaojuniodev.corefitpro.trainingItem.dto.request.TrainingItemRequestDTO;

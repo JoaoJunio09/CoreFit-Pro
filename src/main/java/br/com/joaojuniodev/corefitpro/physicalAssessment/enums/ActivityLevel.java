@@ -2,7 +2,8 @@ package br.com.joaojuniodev.corefitpro.physicalAssessment.enums;
 
 public enum ActivityLevel {
     SEDENTARY,
-    NOT_VERY_ACTIVE,
+    LIGHT,
+    MODERATE,
     ACTIVE,
     VERY_ACTIVE
 }

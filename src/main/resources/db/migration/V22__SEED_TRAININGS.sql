@@ -3,14 +3,17 @@ DECLARE
     lucas_pt_id    UUID;
     fernanda_pt_id UUID;
     rafael_pt_id   UUID;
+    patricia_pt_id UUID;
 
     t1_id UUID; t2_id UUID; t3_id UUID;
     t4_id UUID; t5_id UUID; t6_id UUID;
     t7_id UUID; t8_id UUID; t9_id UUID;
+    t10_id UUID; t11_id UUID;
 BEGIN
     SELECT id INTO lucas_pt_id    FROM personals_trainers WHERE first_name = 'Lucas';
     SELECT id INTO fernanda_pt_id FROM personals_trainers WHERE first_name = 'Fernanda';
     SELECT id INTO rafael_pt_id   FROM personals_trainers WHERE first_name = 'Rafael';
+    SELECT id INTO patricia_pt_id FROM personals_trainers WHERE first_name = 'Patrícia';
 
     INSERT INTO trainings (id, title, description, personal_trainer_id) VALUES
         (gen_random_uuid(), 'Treino A - Peito e Tríceps', 'Foco em empurrar: peito e tríceps', lucas_pt_id) RETURNING id INTO t1_id;
@@ -33,6 +36,11 @@ BEGIN
     INSERT INTO trainings (id, title, description, personal_trainer_id) VALUES
         (gen_random_uuid(), 'Treino de Emagrecimento', 'Foco em queima calórica e resistência', rafael_pt_id) RETURNING id INTO t9_id;
 
+    INSERT INTO trainings (id, title, description, personal_trainer_id) VALUES
+        (gen_random_uuid(), 'Treino Adaptação A', 'Corpo inteiro, foco em reeducação de movimento para iniciantes', patricia_pt_id) RETURNING id INTO t10_id;
+    INSERT INTO trainings (id, title, description, personal_trainer_id) VALUES
+        (gen_random_uuid(), 'Treino Adaptação B', 'Mobilidade e fortalecimento leve de corpo inteiro', patricia_pt_id) RETURNING id INTO t11_id;
+
     INSERT INTO training_muscle_groups (training_id, muscle_group_id)
     SELECT t1_id, id FROM muscle_groups WHERE name IN ('Peito', 'Tríceps')
     UNION ALL
@@ -50,5 +58,9 @@ BEGIN
     UNION ALL
     SELECT t8_id, id FROM muscle_groups WHERE name IN ('Ombros', 'Bíceps', 'Tríceps', 'Abdômen')
     UNION ALL
-    SELECT t9_id, id FROM muscle_groups WHERE name IN ('Abdômen', 'Quadríceps', 'Panturrilha');
+    SELECT t9_id, id FROM muscle_groups WHERE name IN ('Abdômen', 'Quadríceps', 'Panturrilha')
+    UNION ALL
+    SELECT t10_id, id FROM muscle_groups WHERE name IN ('Peito', 'Costas', 'Quadríceps', 'Abdômen')
+    UNION ALL
+    SELECT t11_id, id FROM muscle_groups WHERE name IN ('Ombros', 'Glúteos', 'Panturrilha');
 END $$;

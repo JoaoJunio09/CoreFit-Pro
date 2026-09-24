@@ -4,6 +4,7 @@ import br.com.joaojuniodev.corefitpro.mapper.trainingItem.TrainingItemMapper;
 import br.com.joaojuniodev.corefitpro.personalTrainer.dto.response.AttentionResponseDTO;
 import br.com.joaojuniodev.corefitpro.personalTrainer.dto.response.DashboardResponseDTO;
 import br.com.joaojuniodev.corefitpro.personalTrainer.dto.response.WeeklyRhythmCompletedWorkoutsResponseDTO;
+import br.com.joaojuniodev.corefitpro.personalTrainer.enums.SeverityAttentionEnum;
 import br.com.joaojuniodev.corefitpro.recentAcitivty.service.RecentActivityService;
 import br.com.joaojuniodev.corefitpro.trainee.repository.TraineeRepository;
 import br.com.joaojuniodev.corefitpro.trainingItem.dto.projection.NotCompletedTrainingsProjection;
@@ -76,10 +77,17 @@ public class PersonalDashboardService {
 
         return results.stream()
             .map(r -> {
-                final String title = r.getTraineeName();
-                final String message = "Faltou aos últimos" + r.getCountIncompleteTraining() + " treinos.";
+                final String traineeName = r.getTraineeName();
+                final String message = "Faltou aos últimos " + r.getCountIncompleteTraining() + " treinos.";
                 final String url = "http://localhost:5173/personal/alunos";
-                return new AttentionResponseDTO(title, message, url);
+                return new AttentionResponseDTO(
+                    traineeName,
+                    message,
+                    url,
+                    r.getCountIncompleteTraining() > 3
+                        ? SeverityAttentionEnum.HIGH
+                        : SeverityAttentionEnum.MEDIUM
+                );
             })
             .limit(3)
             .toList();

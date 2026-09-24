@@ -34,6 +34,9 @@ public class TrainingPlain {
     @Column
     private String objective;
 
+    @Column
+    private String goal;
+
     @OneToMany(mappedBy = "trainingPlain")
     private List<TrainingItem> trainings;
 
@@ -85,6 +88,14 @@ public class TrainingPlain {
 
     public void setObjective(String objective) {
         this.objective = objective;
+    }
+
+    public String getGoal() {
+        return goal;
+    }
+
+    public void setGoal(String goal) {
+        this.goal = goal;
     }
 
     public List<TrainingItem> getTrainings() {

@@ -25,6 +25,9 @@ public class Trainee {
     @Column
     private String lastName;
 
+    @Column
+    private String avatarUrl;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -60,6 +63,14 @@ public class Trainee {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public User getUser() {

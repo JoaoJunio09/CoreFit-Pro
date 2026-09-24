@@ -4,6 +4,7 @@ import br.com.joaojuniodev.corefitpro.trainingItem.dto.projection.NotCompletedTr
 import br.com.joaojuniodev.corefitpro.trainingItem.dto.projection.WeeklyRhythmProjection;
 import br.com.joaojuniodev.corefitpro.trainingItem.enums.DaysOfWeek;
 import br.com.joaojuniodev.corefitpro.trainingItem.model.TrainingItem;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -57,6 +58,11 @@ public interface TrainingItemRepository extends JpaRepository<TrainingItem, UUID
     """)
     Long countTraineesUseThisTraining(UUID trainingId);
 
+    @EntityGraph(attributePaths = {
+        "training.exerciseItems",
+        "training.exerciseItems.exercise",
+        "training.muscleGroups",
+    })
     @Query("""
         SELECT ti
         FROM TrainingItem ti
@@ -64,6 +70,10 @@ public interface TrainingItemRepository extends JpaRepository<TrainingItem, UUID
     """)
     List<TrainingItem> findByTrainee(@Param("traineeId") UUID traineeId);
 
+    @EntityGraph(attributePaths = {
+        "training.exerciseItems",
+        "trainingPlain.trainee",
+    })
     @Query("""
         SELECT ti
         FROM TrainingItem ti

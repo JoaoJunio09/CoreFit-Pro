@@ -3,10 +3,12 @@ DECLARE
     lucas_pt_id    UUID;
     fernanda_pt_id UUID;
     rafael_pt_id   UUID;
+    patricia_pt_id UUID;
 BEGIN
     SELECT id INTO lucas_pt_id    FROM personals_trainers WHERE first_name = 'Lucas';
     SELECT id INTO fernanda_pt_id FROM personals_trainers WHERE first_name = 'Fernanda';
     SELECT id INTO rafael_pt_id   FROM personals_trainers WHERE first_name = 'Rafael';
+    SELECT id INTO patricia_pt_id FROM personals_trainers WHERE first_name = 'Patrícia';
 
     INSERT INTO recent_activities (id, registered_at, description, personal_trainer_id) VALUES
         (gen_random_uuid(), NOW() - INTERVAL '9 days',  'Você adicionou 3 novos treinos', lucas_pt_id),
@@ -28,5 +30,9 @@ BEGIN
         (gen_random_uuid(), NOW() - INTERVAL '5 days',  'Você criou um plano de treino para Juliana', rafael_pt_id),
         (gen_random_uuid(), NOW() - INTERVAL '3 days',  'Aluno Diego concluiu o treino Treino Full Body A', rafael_pt_id),
         (gen_random_uuid(), NOW() - INTERVAL '2 days',  'Aluno Juliana concluiu o treino Treino de Emagrecimento', rafael_pt_id),
-        (gen_random_uuid(), NOW() - INTERVAL '1 day',   'Aluno Diego concluiu o treino Treino Full Body B', rafael_pt_id);
+        (gen_random_uuid(), NOW() - INTERVAL '1 day',   'Aluno Diego concluiu o treino Treino Full Body B', rafael_pt_id),
+
+        (gen_random_uuid(), NOW() - INTERVAL '4 days',  'Você adicionou 2 novos treinos', patricia_pt_id),
+        (gen_random_uuid(), NOW() - INTERVAL '3 days',  'Você criou um plano de treino para Isabela', patricia_pt_id),
+        (gen_random_uuid(), NOW() - INTERVAL '1 day',   'Aluno Isabela concluiu o treino Treino Adaptação A', patricia_pt_id);
 END $$;

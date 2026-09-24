@@ -3,6 +3,7 @@ package br.com.joaojuniodev.corefitpro.mapper.trainee;
 import br.com.joaojuniodev.corefitpro.exceptions.NotFoundException;
 import br.com.joaojuniodev.corefitpro.mapper.ObjectMapper;
 import br.com.joaojuniodev.corefitpro.mapper.physicalAssessment.PhysicalAssessmentMapper;
+import br.com.joaojuniodev.corefitpro.mapper.trainingItem.TrainingItemMapper;
 import br.com.joaojuniodev.corefitpro.personalTrainer.repository.PersonalTrainerRepository;
 import br.com.joaojuniodev.corefitpro.security.repository.UserRepository;
 import br.com.joaojuniodev.corefitpro.trainee.dto.request.TraineeRequestDTO;
@@ -26,13 +27,15 @@ public class TraineeMapper implements ObjectMapper<Trainee, TraineeResponseDTO, 
     private final TrainingItemRepository trainingItemRepository;
     private final TrainingPlainRepository trainingPlainRepository;
     private final PhysicalAssessmentMapper physicalAssessmentMapper;
+    private final TrainingItemMapper trainingItemMapper;
 
-    public TraineeMapper(PersonalTrainerRepository personalTrainerRepository, UserRepository userRepository, TrainingItemRepository trainingItemRepository, TrainingPlainRepository trainingPlainRepository, PhysicalAssessmentMapper physicalAssessmentMapper) {
+    public TraineeMapper(PersonalTrainerRepository personalTrainerRepository, UserRepository userRepository, TrainingItemRepository trainingItemRepository, TrainingPlainRepository trainingPlainRepository, PhysicalAssessmentMapper physicalAssessmentMapper, TrainingItemMapper trainingItemMapper) {
         this.personalTrainerRepository = personalTrainerRepository;
         this.userRepository = userRepository;
         this.trainingItemRepository = trainingItemRepository;
         this.trainingPlainRepository = trainingPlainRepository;
         this.physicalAssessmentMapper = physicalAssessmentMapper;
+        this.trainingItemMapper = trainingItemMapper;
     }
 
     @Override
@@ -86,11 +89,22 @@ public class TraineeMapper implements ObjectMapper<Trainee, TraineeResponseDTO, 
     }
 
     public TraineeDetailsDTO toDetails(Trainee entity) {
+        var trainingsOfWeekly = trainingItemRepository.findByTrainee(entity.getId());
+
         return new TraineeDetailsDTO(
             toResponse(entity),
             entity.getPhysicalAssessments()
                 .stream()
-                .map(physicalAssessmentMapper::toResponse).toList()
+                .map(physicalAssessmentMapper::toResponse).toList(),
+            trainingsOfWeekly.stream().map(trainingItemMapper::toResponse).toList()
+        );
+    }
+
+    public TraineeSummaryDTO toSummary(Trainee entity) {
+        return new TraineeSummaryDTO(
+            entity.getId(),
+            entity.getFirstName(),
+            entity.getLastName()
         );
     }
 }

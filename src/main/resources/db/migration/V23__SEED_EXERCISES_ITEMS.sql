@@ -78,3 +78,21 @@ FROM trainings tr, (VALUES
 ) AS v(exercise_name, repetitions, series)
 JOIN exercises e ON e.name = v.exercise_name
 WHERE tr.title = 'Treino de Emagrecimento';
+
+INSERT INTO exercises_items (id, exercise_id, repetitions, series, training_id)
+SELECT gen_random_uuid(), e.id, v.repetitions, v.series, tr.id
+FROM trainings tr, (VALUES
+    ('Flexão de Braço', 8, 2), ('Agachamento Livre', 12, 2),
+    ('Abdominal Supra', 12, 2), ('Elevação de Panturrilha em Pé', 15, 2)
+) AS v(exercise_name, repetitions, series)
+JOIN exercises e ON e.name = v.exercise_name
+WHERE tr.title = 'Treino Adaptação A';
+
+INSERT INTO exercises_items (id, exercise_id, repetitions, series, training_id)
+SELECT gen_random_uuid(), e.id, v.repetitions, v.series, tr.id
+FROM trainings tr, (VALUES
+    ('Elevação Lateral', 12, 2), ('Elevação Pélvica (Hip Thrust)', 12, 2),
+    ('Prancha Isométrica', 1, 2)
+) AS v(exercise_name, repetitions, series)
+JOIN exercises e ON e.name = v.exercise_name
+WHERE tr.title = 'Treino Adaptação B';
