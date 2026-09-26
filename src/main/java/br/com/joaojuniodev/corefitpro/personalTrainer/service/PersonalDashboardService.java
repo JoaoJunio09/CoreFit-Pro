@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -96,12 +97,23 @@ public class PersonalDashboardService {
     private List<WeeklyRhythmCompletedWorkoutsResponseDTO> getWeeklyRhythm(UUID personalTrainerId) {
         List<WeeklyRhythmProjection> results = trainingItemRepository.findWeeklyRhythm(personalTrainerId);
 
-        return results.stream().
-            map(r ->  new WeeklyRhythmCompletedWorkoutsResponseDTO(
-                r.getDayOfWeek(),
-                r.getTotalTrainings(),
-                r.getCompletedTrainings()
-            ))
+        return Arrays.stream(DaysOfWeek.values())
+            .map(day -> {
+                WeeklyRhythmProjection result = results.stream()
+                    .filter(r -> r.getDayOfWeek() == day)
+                    .findFirst()
+                    .orElse(null);
+
+                if (result == null) {
+                    return new WeeklyRhythmCompletedWorkoutsResponseDTO(day, 0L, 0L);
+                }
+
+                return new WeeklyRhythmCompletedWorkoutsResponseDTO(
+                    day,
+                    result.getTotalTrainings(),
+                    result.getCompletedTrainings()
+                );
+            })
             .toList();
     }
 }

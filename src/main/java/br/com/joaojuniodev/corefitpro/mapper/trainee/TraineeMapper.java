@@ -10,7 +10,10 @@ import br.com.joaojuniodev.corefitpro.trainee.dto.request.TraineeRequestDTO;
 import br.com.joaojuniodev.corefitpro.trainee.dto.response.TraineeDetailsDTO;
 import br.com.joaojuniodev.corefitpro.trainee.dto.response.TraineeResponseDTO;
 import br.com.joaojuniodev.corefitpro.trainee.dto.response.TraineeSummaryDTO;
+import br.com.joaojuniodev.corefitpro.trainee.dto.response.TraineeWeeklyTraining;
 import br.com.joaojuniodev.corefitpro.trainee.model.Trainee;
+import br.com.joaojuniodev.corefitpro.trainingItem.enums.DaysOfWeek;
+import br.com.joaojuniodev.corefitpro.trainingItem.enums.TrainingStatus;
 import br.com.joaojuniodev.corefitpro.trainingItem.model.TrainingItem;
 import br.com.joaojuniodev.corefitpro.trainingItem.repository.TrainingItemRepository;
 import br.com.joaojuniodev.corefitpro.trainingPlain.repository.TrainingPlainRepository;
@@ -18,6 +21,15 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class TraineeMapper implements ObjectMapper<Trainee, TraineeResponseDTO, TraineeRequestDTO> {
@@ -58,7 +70,10 @@ public class TraineeMapper implements ObjectMapper<Trainee, TraineeResponseDTO, 
         var trainingPlainForTrainee = trainingPlainRepository.findByTrainee(entity.getId())
             .orElseThrow(() -> new NotFoundException("Not found Training Plain for Trainee Id: " + entity.getId()));
 
-        var lastPhysicalAssessment = entity.getPhysicalAssessments().get(0);
+        var lastPhysicalAssessment = entity.getPhysicalAssessments()
+            .stream()
+            .findFirst()
+            .orElse(null);
 
         var trainingsOfWeekly = trainingItemRepository.findByTrainee(entity.getId());
 
@@ -80,6 +95,7 @@ public class TraineeMapper implements ObjectMapper<Trainee, TraineeResponseDTO, 
             entity.getId(),
             entity.getFirstName(),
             entity.getLastName(),
+            entity.getAvatarUrl(),
             lastPhysicalAssessment.getAge(),
             lastPhysicalAssessment.getWeight(),
             trainingPlainForTrainee.getObjective(),
@@ -91,13 +107,53 @@ public class TraineeMapper implements ObjectMapper<Trainee, TraineeResponseDTO, 
     public TraineeDetailsDTO toDetails(Trainee entity) {
         var trainingsOfWeekly = trainingItemRepository.findByTrainee(entity.getId());
 
+        var totalTrainings = trainingsOfWeekly.stream().count();
+        var completedTrainings = trainingsOfWeekly.stream()
+            .filter(item -> Boolean.TRUE.equals(item.getCompleted()))
+            .count();
+
         return new TraineeDetailsDTO(
             toResponse(entity),
             entity.getPhysicalAssessments()
                 .stream()
                 .map(physicalAssessmentMapper::toResponse).toList(),
-            trainingsOfWeekly.stream().map(trainingItemMapper::toResponse).toList()
+            buildWeeklySchedule(trainingsOfWeekly),
+            totalTrainings,
+            completedTrainings
         );
+    }
+
+    private List<TraineeWeeklyTraining> buildWeeklySchedule(List<TrainingItem> trainingItems) {
+        Map<DaysOfWeek, TrainingItem> itemsByDay = trainingItems.stream()
+            .collect(Collectors.toMap(TrainingItem::getDayOfWeek, Function.identity(), (first, duplicate) -> first));
+
+        LocalDate monday = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate today = LocalDate.now();
+
+        List<TraineeWeeklyTraining> weeklySchedule = new ArrayList<>();
+
+        for (DaysOfWeek day : DaysOfWeek.values()) {
+            TrainingItem item = itemsByDay.get(day);
+
+            if (item == null) {
+                LocalDateTime restDateTime = monday.plusDays(day.ordinal()).atStartOfDay();
+                boolean isToday = restDateTime.toLocalDate().equals(today);
+                weeklySchedule.add(new TraineeWeeklyTraining(null, day, isToday, null, null, restDateTime, TrainingStatus.REST));
+                continue;
+            }
+
+            TrainingStatus status = Boolean.TRUE.equals(item.getCompleted())
+                ? TrainingStatus.COMPLETED
+                : TrainingStatus.PENDING;
+
+            String title = item.getTraining() != null ? item.getTraining().getTitle() : null;
+            String focus = item.getTraining() != null ? item.getTraining().getDescription() : null;
+            boolean isToday = item.getDateTime() != null && item.getDateTime().toLocalDate().equals(today);
+
+            weeklySchedule.add(new TraineeWeeklyTraining(item.getId(), day, isToday, title, focus, item.getDateTime(), status));
+        }
+
+        return weeklySchedule;
     }
 
     public TraineeSummaryDTO toSummary(Trainee entity) {

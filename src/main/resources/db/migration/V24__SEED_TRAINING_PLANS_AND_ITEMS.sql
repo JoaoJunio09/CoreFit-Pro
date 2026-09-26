@@ -54,9 +54,14 @@ BEGIN
             'Ganho de massa muscular no tronco superior, com ênfase em peito e costas',
             'Ganhar 4kg de massa magra em 4 meses')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('MONDAY', TRUE, 'Treino A - Peito e Tríceps'), ('WEDNESDAY', TRUE, 'Treino B - Costas e Bíceps'), ('FRIDAY', FALSE, 'Treino C - Pernas Completo')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('MONDAY', TRUE, 7, 'Treino A - Peito e Tríceps'), ('WEDNESDAY', TRUE, 18, 'Treino B - Costas e Bíceps'), ('FRIDAY', FALSE, 8, 'Treino C - Pernas Completo')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     INSERT INTO training_plans (id, personal_trainer_id, trainee_id, description, active, objective, goal)
@@ -64,9 +69,14 @@ BEGIN
             'Redução de percentual de gordura corporal, mantendo massa magra',
             'Perder 6kg até o verão')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('TUESDAY', FALSE, 'Treino A - Peito e Tríceps'), ('THURSDAY', TRUE, 'Treino C - Pernas Completo')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('TUESDAY', FALSE, 19, 'Treino A - Peito e Tríceps'), ('THURSDAY', TRUE, 7, 'Treino C - Pernas Completo')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     INSERT INTO training_plans (id, personal_trainer_id, trainee_id, description, active, objective, goal)
@@ -74,9 +84,14 @@ BEGIN
             'Condicionamento físico geral com foco em resistência',
             'Correr 5km sem parar em 8 semanas')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('MONDAY', TRUE, 'Treino A - Peito e Tríceps'), ('THURSDAY', FALSE, 'Treino C - Pernas Completo')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('MONDAY', TRUE, 18, 'Treino A - Peito e Tríceps'), ('THURSDAY', FALSE, 7, 'Treino C - Pernas Completo')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     INSERT INTO training_plans (id, personal_trainer_id, trainee_id, description, active, objective, goal)
@@ -84,9 +99,14 @@ BEGIN
             'Tonificação muscular e definição corporal',
             'Reduzir 3% de gordura corporal em 3 meses')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('TUESDAY', TRUE, 'Treino B - Costas e Bíceps'), ('FRIDAY', FALSE, 'Treino C - Pernas Completo')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('TUESDAY', TRUE, 18, 'Treino B - Costas e Bíceps'), ('FRIDAY', FALSE, 8, 'Treino C - Pernas Completo')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     INSERT INTO training_plans (id, personal_trainer_id, trainee_id, description, active, objective, goal)
@@ -94,9 +114,14 @@ BEGIN
             'Ganho de força nos grandes grupos musculares (supino, agachamento, remada)',
             'Aumentar a carga do supino reto em 15kg')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('MONDAY', TRUE, 'Treino A - Peito e Tríceps'), ('WEDNESDAY', TRUE, 'Treino B - Costas e Bíceps'), ('FRIDAY', FALSE, 'Treino C - Pernas Completo')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('MONDAY', TRUE, 19, 'Treino A - Peito e Tríceps'), ('WEDNESDAY', TRUE, 7, 'Treino B - Costas e Bíceps'), ('FRIDAY', FALSE, 18, 'Treino C - Pernas Completo')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     -- ==================== FERNANDA (3) ====================
@@ -106,9 +131,14 @@ BEGIN
             'Hipertrofia muscular com divisão push/pull/legs',
             'Ganhar 5kg de massa muscular em 6 meses')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('MONDAY', TRUE, 'Treino A - Push'), ('WEDNESDAY', TRUE, 'Treino B - Pull'), ('FRIDAY', FALSE, 'Treino C - Legs')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('MONDAY', TRUE, 7, 'Treino A - Push'), ('WEDNESDAY', TRUE, 18, 'Treino B - Pull'), ('FRIDAY', FALSE, 8, 'Treino C - Legs')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     INSERT INTO training_plans (id, personal_trainer_id, trainee_id, description, active, objective, goal)
@@ -116,9 +146,14 @@ BEGIN
             'Recuperação pós-lesão no joelho com fortalecimento gradual',
             'Retomar os treinos de perna sem dor até o fim do trimestre')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('TUESDAY', FALSE, 'Treino B - Pull'), ('THURSDAY', FALSE, 'Treino C - Legs')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('TUESDAY', FALSE, 19, 'Treino B - Pull'), ('THURSDAY', FALSE, 7, 'Treino C - Legs')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     INSERT INTO training_plans (id, personal_trainer_id, trainee_id, description, active, objective, goal)
@@ -126,9 +161,14 @@ BEGIN
             'Emagrecimento com foco em treino funcional de alta intensidade',
             'Perder 8kg em 5 meses')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('MONDAY', TRUE, 'Treino A - Push'), ('THURSDAY', FALSE, 'Treino C - Legs')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('MONDAY', TRUE, 18, 'Treino A - Push'), ('THURSDAY', FALSE, 7, 'Treino C - Legs')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     -- ==================== RAFAEL (7) ====================
@@ -138,9 +178,14 @@ BEGIN
             'Adaptação inicial ao treino de força, corpo inteiro',
             'Criar hábito de treino consistente e ganhar força de base')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('MONDAY', TRUE, 'Treino Full Body A'), ('THURSDAY', TRUE, 'Treino Full Body B')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('MONDAY', TRUE, 18, 'Treino Full Body A'), ('THURSDAY', TRUE, 8, 'Treino Full Body B')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     INSERT INTO training_plans (id, personal_trainer_id, trainee_id, description, active, objective, goal)
@@ -148,9 +193,14 @@ BEGIN
             'Emagrecimento com foco em resistência cardiovascular',
             'Perder 4kg e melhorar o condicionamento em 3 meses')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('TUESDAY', TRUE, 'Treino de Emagrecimento'), ('THURSDAY', FALSE, 'Treino de Emagrecimento'), ('SATURDAY', FALSE, 'Treino de Emagrecimento')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('TUESDAY', TRUE, 19, 'Treino de Emagrecimento'), ('THURSDAY', FALSE, 7, 'Treino de Emagrecimento'), ('SATURDAY', FALSE, 18, 'Treino de Emagrecimento')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     INSERT INTO training_plans (id, personal_trainer_id, trainee_id, description, active, objective, goal)
@@ -158,9 +208,14 @@ BEGIN
             'Hipertrofia com foco em membros superiores',
             'Aumentar a circunferência dos braços em 2cm')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('MONDAY', TRUE, 'Treino Full Body A'), ('THURSDAY', FALSE, 'Treino Full Body B')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('MONDAY', TRUE, 7, 'Treino Full Body A'), ('THURSDAY', FALSE, 18, 'Treino Full Body B')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     INSERT INTO training_plans (id, personal_trainer_id, trainee_id, description, active, objective, goal)
@@ -168,9 +223,14 @@ BEGIN
             'Definição muscular e reforço de core',
             'Reduzir a medida da cintura em 5cm')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('TUESDAY', FALSE, 'Treino Full Body A'), ('FRIDAY', TRUE, 'Treino de Emagrecimento')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('TUESDAY', FALSE, 8, 'Treino Full Body A'), ('FRIDAY', TRUE, 19, 'Treino de Emagrecimento')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     INSERT INTO training_plans (id, personal_trainer_id, trainee_id, description, active, objective, goal)
@@ -178,9 +238,14 @@ BEGIN
             'Ganho de força máxima nos levantamentos básicos',
             'Bater o recorde pessoal no levantamento terra')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('MONDAY', TRUE, 'Treino Full Body A'), ('WEDNESDAY', TRUE, 'Treino Full Body B'), ('FRIDAY', FALSE, 'Treino de Emagrecimento')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('MONDAY', TRUE, 7, 'Treino Full Body A'), ('WEDNESDAY', TRUE, 18, 'Treino Full Body B'), ('FRIDAY', FALSE, 7, 'Treino de Emagrecimento')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     INSERT INTO training_plans (id, personal_trainer_id, trainee_id, description, active, objective, goal)
@@ -188,9 +253,14 @@ BEGIN
             'Condicionamento físico geral com foco em bem-estar',
             'Treinar com consistência 3 vezes por semana')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('TUESDAY', FALSE, 'Treino de Emagrecimento')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('TUESDAY', FALSE, 18, 'Treino de Emagrecimento')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     INSERT INTO training_plans (id, personal_trainer_id, trainee_id, description, active, objective, goal)
@@ -198,9 +268,14 @@ BEGIN
             'Hipertrofia e ganho de massa magra',
             'Ganhar 3kg de massa muscular em 4 meses')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('MONDAY', TRUE, 'Treino Full Body A'), ('THURSDAY', FALSE, 'Treino Full Body B')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('MONDAY', TRUE, 8, 'Treino Full Body A'), ('THURSDAY', FALSE, 19, 'Treino Full Body B')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 
     -- ==================== PATRÍCIA (1) ====================
@@ -210,8 +285,13 @@ BEGIN
             'Reeducação do movimento e adaptação inicial à atividade física',
             'Ganhar consistência de treino e reduzir dores nas costas')
     RETURNING id INTO plan_id;
-    INSERT INTO training_item (id, day_of_week, completed, training_id, training_plan_id)
-    SELECT gen_random_uuid(), v.day, v.completed, tr.id, plan_id
-    FROM (VALUES ('MONDAY', TRUE, 'Treino Adaptação A'), ('THURSDAY', FALSE, 'Treino Adaptação B')) AS v(day, completed, title)
+    INSERT INTO training_item (id, day_of_week, date_time, completed, training_id, training_plan_id)
+    SELECT gen_random_uuid(), v.day,
+        date_trunc('week', CURRENT_DATE) + (CASE v.day
+            WHEN 'MONDAY' THEN 0 WHEN 'TUESDAY' THEN 1 WHEN 'WEDNESDAY' THEN 2
+            WHEN 'THURSDAY' THEN 3 WHEN 'FRIDAY' THEN 4 WHEN 'SATURDAY' THEN 5
+            ELSE 6 END) * INTERVAL '1 day' + (v.hour * INTERVAL '1 hour'),
+        v.completed, tr.id, plan_id
+    FROM (VALUES ('MONDAY', TRUE, 7, 'Treino Adaptação A'), ('THURSDAY', FALSE, 18, 'Treino Adaptação B')) AS v(day, completed, hour, title)
     JOIN trainings tr ON tr.title = v.title;
 END $$;

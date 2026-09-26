@@ -4,6 +4,7 @@ import br.com.joaojuniodev.corefitpro.exceptions.NotFoundException;
 import br.com.joaojuniodev.corefitpro.mapper.ObjectMapper;
 import br.com.joaojuniodev.corefitpro.mapper.trainee.TraineeMapper;
 import br.com.joaojuniodev.corefitpro.mapper.training.TrainingMapper;
+import br.com.joaojuniodev.corefitpro.trainee.dto.response.TraineeSummaryDTO;
 import br.com.joaojuniodev.corefitpro.training.repository.TrainingRepository;
 import br.com.joaojuniodev.corefitpro.trainingItem.dto.request.TrainingItemRequestDTO;
 import br.com.joaojuniodev.corefitpro.trainingItem.dto.response.TrainingItemResponseDTO;
@@ -52,11 +53,21 @@ public class TrainingItemMapper implements ObjectMapper<TrainingItem, TrainingIt
     }
 
     public TrainingItemSummaryDTO toSummary(TrainingItem entity) {
+
+        var trainee = entity.getTrainingPlain().getTrainee();
+
+        var traineeSummary = new TraineeSummaryDTO(
+            trainee.getId(),
+            trainee.getFirstName(),
+            trainee.getLastName()
+        );
+
         return new TrainingItemSummaryDTO(
             entity.getId(),
             entity.getDayOfWeek(),
             entity.getCompleted(),
-            trainingMapper.toSummary(entity.getTraining())
+            trainingMapper.toSummary(entity.getTraining()),
+            traineeSummary
         );
     }
 }

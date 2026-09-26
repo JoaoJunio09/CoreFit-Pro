@@ -6,6 +6,7 @@ public record TraineeResponseDTO(
     UUID id,
     String firstName,
     String lastName,
+    String avatarUrl,
     Integer age,
     Double weight,
     String objective,

@@ -5,6 +5,7 @@ import br.com.joaojuniodev.corefitpro.training.model.Training;
 import br.com.joaojuniodev.corefitpro.trainingPlain.model.TrainingPlain;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -18,6 +19,9 @@ public class TrainingItem {
 
     @Enumerated(EnumType.STRING)
     private DaysOfWeek dayOfWeek;
+
+    @Column
+    private LocalDateTime dateTime;
 
     @Column
     private Boolean completed;
@@ -46,6 +50,14 @@ public class TrainingItem {
 
     public void setDayOfWeek(DaysOfWeek dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public Boolean getCompleted() {

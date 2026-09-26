@@ -1,5 +1,6 @@
 package br.com.joaojuniodev.corefitpro.trainingItem.dto.response;
 
+import br.com.joaojuniodev.corefitpro.trainee.dto.response.TraineeSummaryDTO;
 import br.com.joaojuniodev.corefitpro.training.dto.response.TrainingSummaryDTO;
 import br.com.joaojuniodev.corefitpro.trainingItem.enums.DaysOfWeek;
 
@@ -9,5 +10,6 @@ public record TrainingItemSummaryDTO(
     UUID id,
     DaysOfWeek dayOfWeek,
     Boolean completed,
-    TrainingSummaryDTO training
+    TrainingSummaryDTO training,
+    TraineeSummaryDTO trainee
 ) {}
