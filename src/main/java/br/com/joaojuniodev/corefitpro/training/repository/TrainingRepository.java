@@ -15,7 +15,8 @@ public interface TrainingRepository extends JpaRepository<Training, UUID> {
     @EntityGraph(attributePaths = {
         "muscleGroups",
         "exerciseItems",
-        "exerciseItems.exercise"
+        "exerciseItems.exercise",
+        "exerciseItems.exercise.muscleGroups",
     })
     List<Training> findAll(Specification<Training> spec);
 }

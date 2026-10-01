@@ -72,8 +72,8 @@ public class TrainingService {
 
         Training entity = trainingMapper.toEntity(training);
 
-        Set<MuscleGroup> muscleGroups = (Set<MuscleGroup>) muscleGroupRepository.findAllById(training.muscleGroupsId());
-        entity.setMuscleGroups(muscleGroups);
+        List<MuscleGroup> muscleGroups = muscleGroupRepository.findAllById(training.muscleGroupsId());
+        entity.setMuscleGroups(new HashSet<>(muscleGroups));
 
         var saved = trainingRepository.save(entity);
 
@@ -100,8 +100,8 @@ public class TrainingService {
         entity.setTitle(training.title());
         entity.setDescription(training.description());
 
-        Set<MuscleGroup> muscleGroups = (Set<MuscleGroup>) muscleGroupRepository.findAllById(training.muscleGroupsId());
-        entity.setMuscleGroups(muscleGroups);
+        List<MuscleGroup> muscleGroups = muscleGroupRepository.findAllById(training.muscleGroupsId());
+        entity.setMuscleGroups(new HashSet<>(muscleGroups));
 
         var saved = trainingRepository.save(entity);
 

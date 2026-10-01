@@ -1,8 +1,6 @@
 package br.com.joaojuniodev.corefitpro.exceptions.handler;
 
-import br.com.joaojuniodev.corefitpro.exceptions.InvalidJwtAuthenticationException;
-import br.com.joaojuniodev.corefitpro.exceptions.IsEmptyObjectException;
-import br.com.joaojuniodev.corefitpro.exceptions.NotFoundException;
+import br.com.joaojuniodev.corefitpro.exceptions.*;
 import br.com.joaojuniodev.corefitpro.exceptions.dto.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +37,26 @@ public class CustomizedExceptionHandler {
 
     @ExceptionHandler(IsEmptyObjectException.class)
     public final ResponseEntity<ExceptionResponse> handleIsEmptyObjectException(Exception ex, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+            ex.getMessage(),
+            request.getDescription(true),
+            new Date()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ObjectIsNullException.class)
+    public final ResponseEntity<ExceptionResponse> handleObjectIsNullException(Exception ex, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+            ex.getMessage(),
+            request.getDescription(true),
+            new Date()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileStorageException.class)
+    public final ResponseEntity<ExceptionResponse> handleFileStorageException(Exception ex, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse(
             ex.getMessage(),
             request.getDescription(true),

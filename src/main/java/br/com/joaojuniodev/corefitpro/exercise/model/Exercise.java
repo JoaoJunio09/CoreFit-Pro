@@ -4,10 +4,7 @@ import br.com.joaojuniodev.corefitpro.muscleGroup.model.MuscleGroup;
 import br.com.joaojuniodev.corefitpro.personalTrainer.model.PersonalTrainer;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "exercises")
@@ -26,11 +23,17 @@ public class Exercise {
     @Column
     private Boolean favorite;
 
-    @Column
-    private String photo;
+    @Column(name = "photo_key")
+    private String photoKey;
 
-    @Column
-    private String video;
+    @Column(name = "video_key")
+    private String videoKey;
+
+    @Column(name = "photo_file_id")
+    private String photoFileId;
+
+    @Column(name = "video_file_id")
+    private String videoFileId;
 
     @ManyToOne
     @JoinColumn(name = "personal_trainer_id")
@@ -42,7 +45,7 @@ public class Exercise {
         joinColumns = @JoinColumn(name = "exercise_id"),
         inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
     )
-    private List<MuscleGroup> muscleGroups = new ArrayList<>();
+    private Set<MuscleGroup> muscleGroups = new HashSet<>();
 
     public Exercise() {}
 
@@ -78,20 +81,36 @@ public class Exercise {
         this.favorite = favorite;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getPhotoKey() {
+        return photoKey;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setPhotoKey(String photoKey) {
+        this.photoKey = photoKey;
     }
 
-    public String getVideo() {
-        return video;
+    public String getVideoKey() {
+        return videoKey;
     }
 
-    public void setVideo(String video) {
-        this.video = video;
+    public void setVideoKey(String videoKey) {
+        this.videoKey = videoKey;
+    }
+
+    public String getPhotoFileId() {
+        return photoFileId;
+    }
+
+    public void setPhotoFileId(String photoFileId) {
+        this.photoFileId = photoFileId;
+    }
+
+    public String getVideoFileId() {
+        return videoFileId;
+    }
+
+    public void setVideoFileId(String videoFileId) {
+        this.videoFileId = videoFileId;
     }
 
     public PersonalTrainer getPersonalTrainer() {
@@ -102,11 +121,11 @@ public class Exercise {
         this.personalTrainer = personalTrainer;
     }
 
-    public List<MuscleGroup> getMuscleGroups() {
+    public Set<MuscleGroup> getMuscleGroups() {
         return muscleGroups;
     }
 
-    public void setMuscleGroups(List<MuscleGroup> muscleGroups) {
+    public void setMuscleGroups(Set<MuscleGroup> muscleGroups) {
         this.muscleGroups = muscleGroups;
     }
 

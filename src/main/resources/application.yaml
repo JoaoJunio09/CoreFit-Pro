@@ -3,6 +3,10 @@ cors:
 spring:
   application:
     name: corefitpro
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
   flyway:
@@ -15,3 +19,8 @@ security:
     token:
       secret-key: 57cr37
       expire-length: 3600000
+b2:
+  keyId: 005df139ad1f505000000000a
+  applicationKey: K005JYnTd5AuTcewSqkjS4cvds2/YRY
+  bucketName: corefitpro
+  userAgent: corefitpro/0.0.1

@@ -23,6 +23,10 @@ public class ExerciseSpecification {
 
     private void hasPersonalTrainer(UUID personalTrainerId) {
         this.spec = this.spec.and((root, query, cb) ->
-            cb.equal(root.get("personalTrainer").get("id"), personalTrainerId));
+            cb.or(
+                cb.isNull(root.get("personalTrainer")),
+                cb.equal(root.get("personalTrainer").get("id"), personalTrainerId)
+            )
+        );
     }
 }
